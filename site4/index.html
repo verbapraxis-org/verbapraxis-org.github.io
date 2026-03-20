@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verba Praxis — Traductores Públicos</title>
+  <meta name="description" content="Verba Praxis: red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Especialistas en el par inglés-español." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --parchment: #F2E9D8;
+      --parchment-dark: #E8DCC8;
+      --navy: #2B3A4A;
+      --navy-light: #3d5166;
+      --amber: #C4782A;
+      --amber-light: #d98c3f;
+      --sage: #7A8C6E;
+      --sage-light: #9aae8a;
+      --white: #FDFAF4;
+      --text-muted: #5a6a7a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background-color: var(--parchment);
+      color: var(--navy);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 28px,
+          rgba(43,58,74,0.025) 28px,
+          rgba(43,58,74,0.025) 29px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 48px,
+          rgba(43,58,74,0.015) 48px,
+          rgba(43,58,74,0.015) 49px
+        );
+    }
+
+    h1, h2, h3, h4 { font-family: 'Libre Baskerville', serif; line-height: 1.2; }
+    .mono { font-family: 'Courier Prime', monospace; }
+
+    img, svg { max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== UTILITIES ===== */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    .section-pad { padding: 96px 0; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== COMPASS ROSE ===== */
+    .compass-fixed {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 60px;
+      height: 60px;
+      z-index: 900;
+      opacity: 0.55;
+      pointer-events: none;
+      animation: compassSpin 60s linear infinite;
+    }
+    @keyframes compassSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(242,233,216,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(43,58,74,0.1);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(43,58,74,0.12); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--amber); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      background: var(--navy);
+      color: var(--parchment);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--navy);
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--parchment);
+      border-bottom: 2px solid var(--amber);
+      z-index: 999;
+      padding: 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; }
+    .mobile-menu ul li { padding: 12px 0; border-bottom: 1px solid rgba(43,58,74,0.1); }
+    .mobile-menu ul li:last-child { border-bottom: none; }
+    .mobile-menu ul li a {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .mobile-lang { display: flex; gap: 12px; margin-top: 16px; }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content { padding: 40px 0; }
+
+    .hero-coordinate {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--sage);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-coordinate::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--sage);
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+    .hero-title em { font-style: italic; color: var(--amber); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--navy);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 36px;
+      border: 2px solid var(--navy);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: var(--parchment); }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--amber);
+      color: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-whatsapp:hover { background: var(--amber-light); transform: translateY(-2px); }
+
+    /* ===== SVG NETWORK MAP ===== */
+    .network-svg { width: 100%; max-width: 520px; height: auto; }
+
+    .net-line {
+      stroke: var(--sage);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLine 2s ease forwards;
+    }
+    .net-line:nth-child(1) { animation-delay: 0.3s; }
+    .net-line:nth-child(2) { animation-delay: 0.5s; }
+    .net-line:nth-child(3) { animation-delay: 0.7s; }
+    .net-line:nth-child(4) { animation-delay: 0.9s; }
+    .net-line:nth-child(5) { animation-delay: 1.1s; }
+    .net-line:nth-child(6) { animation-delay: 1.3s; }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+    .net-node { animation: nodeFade 0.5s ease forwards; opacity: 0; }
+    .net-node:nth-child(7)  { animation-delay: 0.4s; }
+    .net-node:nth-child(8)  { animation-delay: 0.6s; }
+    .net-node:nth-child(9)  { animation-delay: 0.8s; }
+    .net-node:nth-child(10) { animation-delay: 1.0s; }
+    .net-node:nth-child(11) { animation-delay: 1.2s; }
+    @keyframes nodeFade { to { opacity: 1; } }
+
+    /* ===== ABOUT ===== */
+    #about { background: var(--white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .stat-item {
+      padding: 20px;
+      border-left: 3px solid var(--amber);
+      background: var(--parchment);
+    }
+    .stat-value {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+
+    .pull-quote {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--navy);
+      padding: 40px 0;
+      border-top: 2px solid var(--amber);
+      position: relative;
+    }
+    .pull-quote::before {
+      content: '\201C';
+      font-size: 5rem;
+      color: var(--amber);
+      opacity: 0.3;
+      position: absolute;
+      top: 20px; left: -10px;
+      line-height: 1;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header { margin-bottom: 64px; }
+    .section-title { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 16px; }
+    .section-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 600px; }
+
+    /* ===== SERVICES ===== */
+    #services { background: var(--parchment); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 36px;
+      border-top: 4px solid var(--sage);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(43,58,74,0.1); }
+    .service-card:nth-child(3) { border-top-color: var(--amber); }
+    .service-card:nth-child(4) { border-top-color: var(--amber); }
+    .service-card.full-width { border-top-color: var(--navy); grid-column: 1 / -1; }
+
+    .service-num { font-family: 'Courier Prime', monospace; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--sage); margin-bottom: 12px; }
+    .service-title { font-size: 1.25rem; margin-bottom: 6px; color: var(--navy); }
+    .service-subtitle { font-family: 'Courier Prime', monospace; font-size: 0.8rem; color: var(--amber); margin-bottom: 16px; letter-spacing: 0.05em; }
+    .service-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
+
+    .service-docs {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .service-docs li {
+      font-size: 0.8rem;
+      color: var(--navy);
+      padding: 4px 10px;
+      background: var(--parchment);
+      border-left: 2px solid var(--amber);
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== WHO WE SERVE ===== */
+    #who {
+      background: var(--parchment-dark);
+      background-image: repeating-linear-gradient(
+        45deg, transparent, transparent 40px,
+        rgba(43,58,74,0.02) 40px, rgba(43,58,74,0.02) 80px
+      );
+    }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .who-clients { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .who-clients li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+    .who-clients li::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--amber);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===== MENTORING ===== */
+    #mentoring { background: var(--white); }
+
+    .mentoring-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .mentoring-lead {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .focus-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .focus-card {
+      padding: 24px;
+      border: 2px solid var(--amber);
+      background: var(--parchment);
+      transition: background 0.2s;
+    }
+    .focus-card:hover { background: var(--white); }
+
+    .focus-icon { font-family: 'Courier Prime', monospace; font-size: 1.2rem; color: var(--amber); margin-bottom: 10px; }
+    .focus-title { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; font-family: 'Source Sans 3', sans-serif; }
+    .focus-desc { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ===== PROCESS ===== */
+    #process { background: var(--navy); }
+    #process .section-title { color: var(--parchment); }
+    #process .section-sub { color: rgba(242,233,216,0.7); }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .process-card {
+      background: rgba(242,233,216,0.07);
+      border: 1px solid rgba(242,233,216,0.15);
+      padding: 32px 24px;
+      transition: background 0.3s;
+    }
+    .process-card:hover { background: rgba(242,233,216,0.12); }
+
+    .process-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--amber);
+      opacity: 0.6;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .process-label { font-family: 'Libre Baskerville', serif; font-size: 1.15rem; color: var(--parchment); margin-bottom: 12px; }
+    .process-desc { font-size: 0.9rem; color: rgba(242,233,216,0.65); line-height: 1.7; }
+
+    /* ===== FAQ ===== */
+    #faq { background: var(--parchment); }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-left: 3px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-left-color: var(--amber); }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 28px;
+      cursor: pointer;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      user-select: none;
+      gap: 16px;
+    }
+    .faq-q:hover { background: var(--parchment); }
+
+    .faq-arrow {
+      flex-shrink: 0;
+      color: var(--amber);
+      transition: transform 0.3s;
+      font-family: 'Courier Prime', monospace;
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0 28px;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 28px 24px; }
+    .faq-a p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.75; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--navy); }
+    #contact .section-title { color: var(--parchment); }
+    #contact .section-sub { color: rgba(242,233,216,0.7); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info { color: var(--parchment); }
+    .contact-info h3 { font-size: 1.4rem; margin-bottom: 24px; color: var(--parchment); }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: rgba(242,233,216,0.8);
+      font-size: 0.97rem;
+    }
+    .contact-detail-icon {
+      font-family: 'Courier Prime', monospace;
+      font-size: 1rem;
+      color: var(--amber);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(242,233,216,0.65);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      background: rgba(242,233,216,0.08);
+      border: 1px solid rgba(242,233,216,0.2);
+      color: var(--parchment);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.97rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(242,233,216,0.3); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--amber); }
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4782A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer;
+    }
+    .form-select option { background: var(--navy); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-success {
+      display: none;
+      background: rgba(122,140,110,0.2);
+      border: 1px solid var(--sage);
+      color: var(--sage-light);
+      padding: 20px 24px;
+      font-size: 0.97rem;
+      line-height: 1.6;
+    }
+    .form-success.show { display: block; }
+
+    .contact-email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(242,233,216,0.8);
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .contact-email-link:hover { color: var(--amber); }
+
+    .footer-coordinate {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--sage);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--parchment-dark);
+      padding: 64px 0 40px;
+      border-top: 2px solid rgba(43,58,74,0.1);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .nav-logo { font-size: 1.3rem; display: inline-block; margin-bottom: 12px; }
+    .footer-brand p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 16px;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 0.9rem; color: var(--text-muted); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--amber); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(43,58,74,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-map { order: -1; }
+      .network-svg { max-width: 380px; margin: 0 auto; display: block; }
+      .about-grid, .mentoring-grid, .who-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card.full-width { grid-column: auto; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .section-pad { padding: 64px 0; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .focus-cards { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .compass-fixed { width: 44px; height: 44px; bottom: 16px; right: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- COMPASS ROSE (fixed, rotating) -->
+  <svg class="compass-fixed" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#C4782A" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="50" cy="50" r="36" fill="none" stroke="#7A8C6E" stroke-width="0.8" opacity="0.5"/>
+    <polygon points="50,8 55,46 50,42 45,46" fill="#C4782A"/>
+    <polygon points="50,92 55,54 50,58 45,54" fill="#2B3A4A" opacity="0.7"/>
+    <polygon points="92,50 54,45 58,50 54,55" fill="#2B3A4A" opacity="0.5"/>
+    <polygon points="8,50 46,45 42,50 46,55" fill="#2B3A4A" opacity="0.5"/>
+    <circle cx="50" cy="50" r="5" fill="#C4782A"/>
+    <circle cx="50" cy="50" r="2.5" fill="#F2E9D8"/>
+    <line x1="50" y1="4" x2="50" y2="9" stroke="#C4782A" stroke-width="1.5"/>
+    <line x1="50" y1="91" x2="50" y2="96" stroke="#C4782A" stroke-width="1.5"/>
+    <line x1="4" y1="50" x2="9" y2="50" stroke="#C4782A" stroke-width="1.5"/>
+    <line x1="91" y1="50" x2="96" y2="50" stroke="#C4782A" stroke-width="1.5"/>
+    <line x1="79.5" y1="20.5" x2="76" y2="24" stroke="#7A8C6E" stroke-width="1" opacity="0.7"/>
+    <line x1="20.5" y1="20.5" x2="24" y2="24" stroke="#7A8C6E" stroke-width="1" opacity="0.7"/>
+    <line x1="79.5" y1="79.5" x2="76" y2="76" stroke="#7A8C6E" stroke-width="1" opacity="0.7"/>
+    <line x1="20.5" y1="79.5" x2="24" y2="76" stroke="#7A8C6E" stroke-width="1" opacity="0.7"/>
+    <text x="50" y="19" text-anchor="middle" font-family="Courier Prime, monospace" font-size="8" fill="#C4782A" font-weight="700">N</text>
+  </svg>
+
+  <!-- ===== NAV ===== -->
+  <nav id="main-nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">Verba<span>Praxis</span></a>
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav_about">Nosotros</a></li>
+          <li><a href="#services" data-i18n="nav_services">Servicios</a></li>
+          <li><a href="#mentoring" data-i18n="nav_mentoring">Mentoría</a></li>
+          <li><a href="#process" data-i18n="nav_process">Proceso</a></li>
+          <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+          <li><a href="#contact" data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+        <div class="nav-right">
+          <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+          <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="#about" data-i18n="nav_about" onclick="closeMenu()">Nosotros</a></li>
+      <li><a href="#services" data-i18n="nav_services" onclick="closeMenu()">Servicios</a></li>
+      <li><a href="#mentoring" data-i18n="nav_mentoring" onclick="closeMenu()">Mentoría</a></li>
+      <li><a href="#process" data-i18n="nav_process" onclick="closeMenu()">Proceso</a></li>
+      <li><a href="#faq" data-i18n="nav_faq" onclick="closeMenu()">FAQ</a></li>
+      <li><a href="#contact" data-i18n="nav_contact" onclick="closeMenu()">Contacto</a></li>
+    </ul>
+    <div class="mobile-lang">
+      <button class="lang-btn active" id="m-btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="m-btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <p class="hero-coordinate">34°55'S · 57°57'W — Buenos Aires</p>
+          <h1 class="hero-title" id="hero-title">
+            Cada documento<br/>tiene su <em>destino.</em><br/>Nosotros trazamos<br/>el camino.
+          </h1>
+          <p class="hero-sub" data-i18n="hero_sub">Traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Especialistas en inglés-español.</p>
+          <a href="#contact" class="btn-primary" data-i18n="hero_cta">Consultar ahora</a>
+        </div>
+        <div class="hero-map">
+          <svg class="network-svg" viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa de red lingüística">
+            <defs>
+              <pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2B3A4A" stroke-width="0.3" opacity="0.2"/>
+              </pattern>
+            </defs>
+            <rect width="520" height="440" fill="none"/>
+            <rect width="520" height="440" fill="url(#mapgrid)"/>
+            <!-- Lat/Lon guide lines -->
+            <line x1="0" y1="110" x2="520" y2="110" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <line x1="0" y1="220" x2="520" y2="220" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <line x1="0" y1="330" x2="520" y2="330" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <line x1="130" y1="0" x2="130" y2="440" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <line x1="260" y1="0" x2="260" y2="440" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <line x1="390" y1="0" x2="390" y2="440" stroke="#7A8C6E" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8"/>
+            <!-- Connection lines -->
+            <line class="net-line" x1="120" y1="220" x2="260" y2="110"/>
+            <line class="net-line" x1="120" y1="220" x2="260" y2="330"/>
+            <line class="net-line" x1="400" y1="220" x2="260" y2="110"/>
+            <line class="net-line" x1="400" y1="220" x2="260" y2="330"/>
+            <line class="net-line" x1="260" y1="110" x2="260" y2="330"/>
+            <line class="net-line" x1="120" y1="220" x2="400" y2="220" stroke-dasharray="5 7" opacity="0.4"/>
+            <!-- ES Node -->
+            <g class="net-node">
+              <circle cx="120" cy="220" r="44" fill="#F2E9D8" stroke="#C4782A" stroke-width="2.5"/>
+              <circle cx="120" cy="220" r="38" fill="none" stroke="#C4782A" stroke-width="0.8" opacity="0.35" stroke-dasharray="3 5"/>
+              <text x="120" y="213" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="23" font-weight="700" fill="#2B3A4A">ES</text>
+              <text x="120" y="232" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9" fill="#7A8C6E" letter-spacing="1">Español</text>
+            </g>
+            <!-- EN Node -->
+            <g class="net-node">
+              <circle cx="400" cy="220" r="44" fill="#F2E9D8" stroke="#C4782A" stroke-width="2.5"/>
+              <circle cx="400" cy="220" r="38" fill="none" stroke="#C4782A" stroke-width="0.8" opacity="0.35" stroke-dasharray="3 5"/>
+              <text x="400" y="213" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="23" font-weight="700" fill="#2B3A4A">EN</text>
+              <text x="400" y="232" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9" fill="#7A8C6E" letter-spacing="1">English</text>
+            </g>
+            <!-- Legal Node -->
+            <g class="net-node">
+              <circle cx="260" cy="110" r="40" fill="#2B3A4A" stroke="#7A8C6E" stroke-width="1.5"/>
+              <text x="260" y="104" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="14" font-weight="700" fill="#F2E9D8">Legal</text>
+              <text x="260" y="122" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9" fill="#C4782A" letter-spacing="0.5">Jurada</text>
+            </g>
+            <!-- Técnico Node -->
+            <g class="net-node">
+              <circle cx="260" cy="330" r="40" fill="#2B3A4A" stroke="#7A8C6E" stroke-width="1.5"/>
+              <text x="260" y="324" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="13" font-weight="700" fill="#F2E9D8">Técnica</text>
+              <text x="260" y="342" text-anchor="middle" font-family="Courier Prime, monospace" font-size="9" fill="#C4782A" letter-spacing="0.5">Jurada</text>
+            </g>
+            <!-- Audiovisual Node -->
+            <g class="net-node">
+              <circle cx="260" cy="220" r="32" fill="#7A8C6E" stroke="#C4782A" stroke-width="1.5"/>
+              <text x="260" y="214" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="11" font-weight="700" fill="#F2E9D8">Audio</text>
+              <text x="260" y="229" text-anchor="middle" font-family="Libre Baskerville, serif" font-size="11" font-weight="700" fill="#F2E9D8">visual</text>
+            </g>
+            <!-- Labels -->
+            <text x="10" y="20" font-family="Courier Prime, monospace" font-size="9" fill="#7A8C6E" opacity="0.5">34°55'S</text>
+            <text x="450" y="20" font-family="Courier Prime, monospace" font-size="9" fill="#7A8C6E" opacity="0.5">57°57'W</text>
+            <text x="10" y="430" font-family="Courier Prime, monospace" font-size="9" fill="#7A8C6E" opacity="0.5">Buenos Aires</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section-pad">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="about-label">// 01 — <span data-i18n="nav_about">Nosotros</span></p>
+          <h2 class="section-title" data-i18n="about_title">Red de traductores certificados</h2>
+          <p class="about-text" data-i18n="about_text">Verba Praxis es una red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Trabajamos exclusivamente con el par inglés-español, con dominio de los registros jurídicos, técnicos y culturales de ambas lenguas. Operamos de forma 100% remota, con clientes en Argentina, América Latina, Europa y Estados Unidos.</p>
+          <div class="stats-grid">
+            <div class="stat-item reveal reveal-delay-1">
+              <div class="stat-value" data-i18n="stat1_val">100% Online</div>
+              <div class="stat-label" data-i18n="stat1_label">Operación remota</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-2">
+              <div class="stat-value">ES ↔ EN</div>
+              <div class="stat-label" data-i18n="stat2_label">Par lingüístico exclusivo</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-3">
+              <div class="stat-value" data-i18n="stat3_val">Poder Judicial</div>
+              <div class="stat-label" data-i18n="stat3_label">Matriculados — PJN</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-4">
+              <div class="stat-value" data-i18n="stat4_val">Worldwide</div>
+              <div class="stat-label" data-i18n="stat4_label">Clientes en todo el mundo</div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <blockquote class="pull-quote" data-i18n="pull_quote">La precisión no es un detalle. Es el servicio.</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="about-label">// 02 — <span data-i18n="nav_services">Servicios</span></p>
+        <h2 class="section-title" data-i18n="services_title">Soluciones de traducción</h2>
+        <p class="section-sub" data-i18n="services_sub">Cada encargo es tratado con el rigor terminológico que exige el par inglés-español en contextos profesionales y legales.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-num mono">01</div>
+          <h3 class="service-title" data-i18n="s1_title">Traducción Legal Jurada</h3>
+          <div class="service-subtitle" data-i18n="s1_sub">Legal Sworn Translation</div>
+          <p class="service-desc" data-i18n="s1_desc">Para estudios jurídicos, empresas multinacionales y organismos públicos. Fe Pública con validez ante organismos judiciales, notariales y gubernamentales en Argentina y el exterior.</p>
+          <ul class="service-docs">
+            <li data-i18n="s1_d1">Contratos</li>
+            <li data-i18n="s1_d2">Actas constitutivas</li>
+            <li data-i18n="s1_d3">Poderes notariales</li>
+            <li data-i18n="s1_d4">Órdenes judiciales</li>
+            <li data-i18n="s1_d5">Apostillas</li>
+            <li data-i18n="s1_d6">Certificados vitales</li>
+            <li data-i18n="s1_d7">Documentos migratorios</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-num mono">02</div>
+          <h3 class="service-title" data-i18n="s2_title">Traducción Técnica Jurada</h3>
+          <div class="service-subtitle" data-i18n="s2_sub">Technical Sworn Translation</div>
+          <p class="service-desc" data-i18n="s2_desc">Para empresas de ingeniería, manufactura y tecnología. Precisión terminológica en documentos de alta responsabilidad técnica.</p>
+          <ul class="service-docs">
+            <li data-i18n="s2_d1">Manuales de usuario</li>
+            <li data-i18n="s2_d2">Fichas SDS/MSDS</li>
+            <li data-i18n="s2_d3">Especificaciones técnicas</li>
+            <li data-i18n="s2_d4">Informes de ingeniería</li>
+            <li data-i18n="s2_d5">Normas ISO/ASTM</li>
+            <li data-i18n="s2_d6">Patentes</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-num mono">03</div>
+          <h3 class="service-title" data-i18n="s3_title">Traducción Audiovisual</h3>
+          <div class="service-subtitle" data-i18n="s3_sub">Audiovisual Translation</div>
+          <p class="service-desc" data-i18n="s3_desc">Para productoras, plataformas de streaming y agencias de contenido. Fidelidad al tono y al ritmo del original.</p>
+          <ul class="service-docs">
+            <li data-i18n="s3_d1">Subtítulos SRT/VTT</li>
+            <li data-i18n="s3_d2">Guiones de doblaje</li>
+            <li data-i18n="s3_d3">Localización de interfaces</li>
+          </ul>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-num mono">04</div>
+          <h3 class="service-title" data-i18n="s4_title">Mentoría en Inglés</h3>
+          <div class="service-subtitle" data-i18n="s4_sub">English Mentoring</div>
+          <p class="service-desc" data-i18n="s4_desc">Sesiones individuales online diseñadas para tus objetivos reales. Sin preparación para exámenes ni certificados.</p>
+          <ul class="service-docs">
+            <li data-i18n="s4_d1">Rendimiento profesional</li>
+            <li data-i18n="s4_d2">Entrevistas de trabajo</li>
+            <li data-i18n="s4_d3">Pronunciación</li>
+            <li data-i18n="s4_d4">Fluidez para viajes</li>
+          </ul>
+        </div>
+
+        <div class="service-card full-width reveal">
+          <div class="service-num mono">05</div>
+          <h3 class="service-title" data-i18n="s5_title">Asesoría Lingüística</h3>
+          <div class="service-subtitle" data-i18n="s5_sub">Language Advisory</div>
+          <p class="service-desc" data-i18n="s5_desc">Para profesionales y empresas que necesitan asistencia puntual en inglés. Sin compromisos de programa.</p>
+          <ul class="service-docs">
+            <li data-i18n="s5_d1">Emails</li>
+            <li data-i18n="s5_d2">Presentaciones</li>
+            <li data-i18n="s5_d3">Contratos</li>
+            <li data-i18n="s5_d4">Comunicaciones</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHO WE SERVE ===== -->
+  <section id="who" class="section-pad">
+    <div class="container">
+      <div class="who-grid">
+        <div class="reveal">
+          <p class="about-label">// 03 — <span data-i18n="nav_who">Clientes</span></p>
+          <h2 class="section-title" data-i18n="who_title">¿A quiénes servimos?</h2>
+          <p class="about-text" data-i18n="who_text">Prestamos servicios a empresas y profesionales en Argentina, América Latina y el mundo.</p>
+          <a href="#contact" class="btn-secondary" data-i18n="who_cta">Consultar disponibilidad</a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <ul class="who-clients">
+            <li data-i18n="who_c1">Estudios jurídicos</li>
+            <li data-i18n="who_c2">Empresas multinacionales</li>
+            <li data-i18n="who_c3">Productoras y agencias</li>
+            <li data-i18n="who_c4">Departamentos de RRHH</li>
+            <li data-i18n="who_c5">Individuos con trámites internacionales</li>
+            <li data-i18n="who_c6">Empresas exportadoras</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MENTORING ===== -->
+  <section id="mentoring" class="section-pad">
+    <div class="container">
+      <div class="mentoring-grid">
+        <div class="reveal">
+          <p class="about-label">// 04 — <span data-i18n="nav_mentoring">Mentoría</span></p>
+          <h2 class="section-title" data-i18n="ment_title">El idioma como herramienta, no como obstáculo</h2>
+          <p class="mentoring-lead" data-i18n="ment_text">Aprender inglés no debería sentirse como estudiar para un examen. Nuestras sesiones parten de tus objetivos reales: una entrevista en una empresa internacional, una reunión con clientes de Nueva York, una presentación ante un directorio en Londres. Trazamos el camino juntos.</p>
+          <a href="#contact" class="btn-primary" data-i18n="ment_cta">Comenzar mentoría</a>
+        </div>
+        <div class="focus-cards reveal reveal-delay-2">
+          <div class="focus-card">
+            <div class="focus-icon">[ ★ ]</div>
+            <div class="focus-title" data-i18n="fc1_title">Rendimiento profesional</div>
+            <div class="focus-desc" data-i18n="fc1_desc">Inglés funcional para entornos corporativos y reuniones de alto nivel.</div>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon">[ ✦ ]</div>
+            <div class="focus-title" data-i18n="fc2_title">Entrevistas de trabajo</div>
+            <div class="focus-desc" data-i18n="fc2_desc">Preparación específica para procesos de selección en empresas internacionales.</div>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon">[ ◉ ]</div>
+            <div class="focus-title" data-i18n="fc3_title">Pronunciación y claridad</div>
+            <div class="focus-desc" data-i18n="fc3_desc">Comunicación efectiva con hablantes nativos en contextos de presión.</div>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon">[ ➤ ]</div>
+            <div class="focus-title" data-i18n="fc4_title">Fluidez para viajes</div>
+            <div class="focus-desc" data-i18n="fc4_desc">Inglés práctico para desplazarse, negociar y conectar en el exterior.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section id="process" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="about-label" style="color:rgba(196,120,42,0.8);">// 05 — <span data-i18n="nav_process">Proceso</span></p>
+        <h2 class="section-title" data-i18n="proc_title">Del punto de partida a la llegada</h2>
+        <p class="section-sub" data-i18n="proc_sub">Cuatro pasos cartográficos para cada encargo.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-card reveal">
+          <div class="process-num">01</div>
+          <div class="process-label" data-i18n="proc1_label">Coordenadas</div>
+          <p class="process-desc" data-i18n="proc1_desc">Compartís el documento o describís tu necesidad. Nos orientamos en el terreno.</p>
+        </div>
+        <div class="process-card reveal reveal-delay-1">
+          <div class="process-num">02</div>
+          <div class="process-label" data-i18n="proc2_label">Ruta</div>
+          <p class="process-desc" data-i18n="proc2_desc">Evaluamos y confirmamos el plan, plazo y presupuesto. Sin sorpresas.</p>
+        </div>
+        <div class="process-card reveal reveal-delay-2">
+          <div class="process-num">03</div>
+          <div class="process-label" data-i18n="proc3_label">Travesía</div>
+          <p class="process-desc" data-i18n="proc3_desc">Traducimos o mentoreamos con rigor terminológico y revisión editorial.</p>
+        </div>
+        <div class="process-card reveal reveal-delay-3">
+          <div class="process-num">04</div>
+          <div class="process-label" data-i18n="proc4_label">Llegada</div>
+          <p class="process-desc" data-i18n="proc4_desc">Entregamos con certificación y validez legal. El destino alcanzado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <p class="about-label">// 06 — FAQ</p>
+        <h2 class="section-title" data-i18n="faq_title">Preguntas frecuentes</h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq1_q">¿Qué es un traductor público matriculado?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq1_a">Es un profesional habilitado por el Poder Judicial para producir traducciones con Fe Pública, que tienen validez legal ante organismos judiciales, notariales y gubernamentales.</p></div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq2_q">¿La traducción jurada tiene validez en otros países?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq2_a">Sí. La traducción jurada argentina tiene validez internacional, especialmente en países que reconocen la apostilla o mantienen acuerdos de cooperación judicial con Argentina.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq3_q">¿Solo trabajan con inglés y español?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq3_a">Sí. Trabajamos exclusivamente con el par inglés-español, lo que nos permite un dominio profundo de ambos registros lingüísticos.</p></div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq4_q">¿Cuánto demora una traducción?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq4_a">Depende de la extensión y complejidad del documento. La mayoría de los encargos se entregan en 48 a 72 horas hábiles.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq5_q">¿Puedo enviar el documento por WhatsApp?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq5_a">Sí. Podés enviarnos el documento por WhatsApp o por email. Trabajamos 100% de forma remota.</p></div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq6_q">¿Las sesiones de mentoría son individuales?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq6_a">Sí. Todas las sesiones son individuales y se diseñan en torno a tus objetivos concretos.</p></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq7_q">¿Qué necesito para empezar la mentoría?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq7_a">Solo contarnos qué querés lograr. No hay nivel mínimo requerido ni evaluación previa.</p></div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span data-i18n="faq8_q">¿Traducen documentos personales como actas de nacimiento?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><p data-i18n="faq8_a">Sí. Traducimos certificados de nacimiento, matrimonio, defunción, antecedentes penales y todo tipo de documentación personal con validez legal.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section-pad">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="about-label" style="color:rgba(196,120,42,0.8);">// 07 — <span data-i18n="nav_contact">Contacto</span></p>
+        <h2 class="section-title" data-i18n="contact_title">Trazá tu ruta</h2>
+        <p class="section-sub" data-i18n="contact_sub">Contanos qué necesitás. Respondemos a la brevedad.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3 data-i18n="contact_reach">Canales de contacto</h3>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">[ WA ]</span>
+            <div>
+              <div style="margin-bottom:14px;">
+                <a href="https://wa.me/5492215972410" class="btn-whatsapp" target="_blank" rel="noopener">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+              </div>
+              <span style="font-family:'Courier Prime',monospace;font-size:0.82rem;color:rgba(242,233,216,0.45);">+54 9 221 597-2410</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">[ @ ]</span>
+            <a href="mailto:verbapraxis@outlook.com" class="contact-email-link">verbapraxis@outlook.com</a>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">[ ◎ ]</span>
+            <p data-i18n="contact_remote" style="color:rgba(242,233,216,0.65);font-size:0.9rem;">Operamos 100% de forma remota. Atendemos clientes en Argentina y el exterior.</p>
+          </div>
+          <div style="margin-top:36px;padding-top:24px;border-top:1px solid rgba(242,233,216,0.1);">
+            <p class="footer-coordinate" style="color:rgba(122,140,110,0.75);">34°55'S · 57°57'W — Buenos Aires, Argentina</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" data-i18n="form_name">Nombre</label>
+              <input type="text" class="form-input" placeholder="Tu nombre completo" data-i18n-placeholder="form_name_ph" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="form_email">Email</label>
+              <input type="email" class="form-input" placeholder="tu@email.com" data-i18n-placeholder="form_email_ph" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="form_subject">Servicio</label>
+              <select class="form-input form-select" required>
+                <option value="" data-i18n="form_subject_ph">Seleccioná un servicio</option>
+                <option value="legal" data-i18n="form_opt1">Traducción Legal Jurada</option>
+                <option value="technical" data-i18n="form_opt2">Traducción Técnica Jurada</option>
+                <option value="audiovisual" data-i18n="form_opt3">Traducción Audiovisual</option>
+                <option value="mentoring" data-i18n="form_opt4">Mentoría en Inglés</option>
+                <option value="advisory" data-i18n="form_opt5">Asesoría Lingüística</option>
+                <option value="other" data-i18n="form_opt6">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="form_message">Mensaje</label>
+              <textarea class="form-textarea" placeholder="Contanos qué necesitás..." data-i18n-placeholder="form_message_ph" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" data-i18n="form_submit">Enviar consulta</button>
+          </form>
+          <div class="form-success" id="form-success">
+            <strong data-i18n="success_title">¡Consulta recibida!</strong><br/>
+            <span data-i18n="success_msg">Gracias por escribirnos. Te responderemos a la brevedad por el mismo canal.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo">Verba<span>Praxis</span></a>
+          <p data-i18n="footer_brand_desc">Red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Especialistas en inglés-español.</p>
+          <div class="footer-coordinate">34°55'S · 57°57'W — Buenos Aires</div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col1">Servicios</h4>
+          <ul>
+            <li><a href="#services" data-i18n="footer_s1">Legal Jurada</a></li>
+            <li><a href="#services" data-i18n="footer_s2">Técnica Jurada</a></li>
+            <li><a href="#services" data-i18n="footer_s3">Audiovisual</a></li>
+            <li><a href="#mentoring" data-i18n="footer_s4">Mentoría</a></li>
+            <li><a href="#services" data-i18n="footer_s5">Asesoría</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col2">Navegación</h4>
+          <ul>
+            <li><a href="#about" data-i18n="nav_about">Nosotros</a></li>
+            <li><a href="#who" data-i18n="nav_who">Clientes</a></li>
+            <li><a href="#process" data-i18n="nav_process">Proceso</a></li>
+            <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+            <li><a href="#contact" data-i18n="nav_contact">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_col3">Contacto</h4>
+          <ul>
+            <li><a href="https://wa.me/5492215972410" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="mailto:verbapraxis@outlook.com">verbapraxis@outlook.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2025 Verba Praxis. Todos los derechos reservados.</p>
+        <p class="mono" style="font-size:0.78rem;color:var(--sage);">ES ↔ EN · Poder Judicial de la Nación</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===========================
+       LOCALE DATA
+    =========================== */
+    const locales = {
+      es: {
+        nav_about: 'Nosotros', nav_services: 'Servicios', nav_mentoring: 'Mentoría',
+        nav_process: 'Proceso', nav_faq: 'FAQ', nav_contact: 'Contacto', nav_who: 'Clientes',
+
+        hero_title_html: 'Cada documento<br/>tiene su <em>destino.</em><br/>Nosotros trazamos<br/>el camino.',
+        hero_sub: 'Traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Especialistas en inglés-español.',
+        hero_cta: 'Consultar ahora',
+
+        about_title: 'Red de traductores certificados',
+        about_text: 'Verba Praxis es una red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Trabajamos exclusivamente con el par inglés-español, con dominio de los registros jurídicos, técnicos y culturales de ambas lenguas. Operamos de forma 100% remota, con clientes en Argentina, América Latina, Europa y Estados Unidos.',
+        stat1_val: '100% Online', stat1_label: 'Operación remota',
+        stat2_label: 'Par lingüístico exclusivo',
+        stat3_val: 'Poder Judicial', stat3_label: 'Matriculados — PJN',
+        stat4_val: 'Worldwide', stat4_label: 'Clientes en todo el mundo',
+        pull_quote: 'La precisión no es un detalle. Es el servicio.',
+
+        services_title: 'Soluciones de traducción',
+        services_sub: 'Cada encargo es tratado con el rigor terminológico que exige el par inglés-español en contextos profesionales y legales.',
+
+        s1_title: 'Traducción Legal Jurada', s1_sub: 'Legal Sworn Translation',
+        s1_desc: 'Para estudios jurídicos, empresas multinacionales y organismos públicos. Fe Pública con validez ante organismos judiciales, notariales y gubernamentales en Argentina y el exterior.',
+        s1_d1: 'Contratos', s1_d2: 'Actas constitutivas', s1_d3: 'Poderes notariales',
+        s1_d4: 'Órdenes judiciales', s1_d5: 'Apostillas', s1_d6: 'Certificados vitales', s1_d7: 'Documentos migratorios',
+
+        s2_title: 'Traducción Técnica Jurada', s2_sub: 'Technical Sworn Translation',
+        s2_desc: 'Para empresas de ingeniería, manufactura y tecnología. Precisión terminológica en documentos de alta responsabilidad técnica.',
+        s2_d1: 'Manuales de usuario', s2_d2: 'Fichas SDS/MSDS', s2_d3: 'Especificaciones técnicas',
+        s2_d4: 'Informes de ingeniería', s2_d5: 'Normas ISO/ASTM', s2_d6: 'Patentes',
+
+        s3_title: 'Traducción Audiovisual', s3_sub: 'Audiovisual Translation',
+        s3_desc: 'Para productoras, plataformas de streaming y agencias de contenido. Fidelidad al tono y al ritmo del original.',
+        s3_d1: 'Subtítulos SRT/VTT', s3_d2: 'Guiones de doblaje', s3_d3: 'Localización de interfaces',
+
+        s4_title: 'Mentoría en Inglés', s4_sub: 'English Mentoring',
+        s4_desc: 'Sesiones individuales online diseñadas para tus objetivos reales. Sin preparación para exámenes ni certificados.',
+        s4_d1: 'Rendimiento profesional', s4_d2: 'Entrevistas de trabajo', s4_d3: 'Pronunciación', s4_d4: 'Fluidez para viajes',
+
+        s5_title: 'Asesoría Lingüística', s5_sub: 'Language Advisory',
+        s5_desc: 'Para profesionales y empresas que necesitan asistencia puntual en inglés. Sin compromisos de programa.',
+        s5_d1: 'Emails', s5_d2: 'Presentaciones', s5_d3: 'Contratos', s5_d4: 'Comunicaciones',
+
+        who_title: '¿A quiénes servimos?',
+        who_text: 'Prestamos servicios a empresas y profesionales en Argentina, América Latina y el mundo.',
+        who_cta: 'Consultar disponibilidad',
+        who_c1: 'Estudios jurídicos', who_c2: 'Empresas multinacionales', who_c3: 'Productoras y agencias',
+        who_c4: 'Departamentos de RRHH', who_c5: 'Individuos con trámites internacionales', who_c6: 'Empresas exportadoras',
+
+        ment_title: 'El idioma como herramienta, no como obstáculo',
+        ment_text: 'Aprender inglés no debería sentirse como estudiar para un examen. Nuestras sesiones parten de tus objetivos reales: una entrevista en una empresa internacional, una reunión con clientes de Nueva York, una presentación ante un directorio en Londres. Trazamos el camino juntos.',
+        ment_cta: 'Comenzar mentoría',
+        fc1_title: 'Rendimiento profesional', fc1_desc: 'Inglés funcional para entornos corporativos y reuniones de alto nivel.',
+        fc2_title: 'Entrevistas de trabajo', fc2_desc: 'Preparación específica para procesos de selección en empresas internacionales.',
+        fc3_title: 'Pronunciación y claridad', fc3_desc: 'Comunicación efectiva con hablantes nativos en contextos de presión.',
+        fc4_title: 'Fluidez para viajes', fc4_desc: 'Inglés práctico para desplazarse, negociar y conectar en el exterior.',
+
+        proc_title: 'Del punto de partida a la llegada',
+        proc_sub: 'Cuatro pasos cartográficos para cada encargo.',
+        proc1_label: 'Coordenadas', proc1_desc: 'Compartís el documento o describís tu necesidad. Nos orientamos en el terreno.',
+        proc2_label: 'Ruta', proc2_desc: 'Evaluamos y confirmamos el plan, plazo y presupuesto. Sin sorpresas.',
+        proc3_label: 'Travesía', proc3_desc: 'Traducimos o mentoreamos con rigor terminológico y revisión editorial.',
+        proc4_label: 'Llegada', proc4_desc: 'Entregamos con certificación y validez legal. El destino alcanzado.',
+
+        faq_title: 'Preguntas frecuentes',
+        faq1_q: '¿Qué es un traductor público matriculado?',
+        faq1_a: 'Es un profesional habilitado por el Poder Judicial para producir traducciones con Fe Pública, que tienen validez legal ante organismos judiciales, notariales y gubernamentales.',
+        faq2_q: '¿La traducción jurada tiene validez en otros países?',
+        faq2_a: 'Sí. La traducción jurada argentina tiene validez internacional, especialmente en países que reconocen la apostilla o mantienen acuerdos de cooperación judicial con Argentina.',
+        faq3_q: '¿Solo trabajan con inglés y español?',
+        faq3_a: 'Sí. Trabajamos exclusivamente con el par inglés-español, lo que nos permite un dominio profundo de ambos registros lingüísticos.',
+        faq4_q: '¿Cuánto demora una traducción?',
+        faq4_a: 'Depende de la extensión y complejidad del documento. La mayoría de los encargos se entregan en 48 a 72 horas hábiles.',
+        faq5_q: '¿Puedo enviar el documento por WhatsApp?',
+        faq5_a: 'Sí. Podés enviarnos el documento por WhatsApp o por email. Trabajamos 100% de forma remota.',
+        faq6_q: '¿Las sesiones de mentoría son individuales?',
+        faq6_a: 'Sí. Todas las sesiones son individuales y se diseñan en torno a tus objetivos concretos.',
+        faq7_q: '¿Qué necesito para empezar la mentoría?',
+        faq7_a: 'Solo contarnos qué querés lograr. No hay nivel mínimo requerido ni evaluación previa.',
+        faq8_q: '¿Traducen documentos personales como actas de nacimiento?',
+        faq8_a: 'Sí. Traducimos certificados de nacimiento, matrimonio, defunción, antecedentes penales y todo tipo de documentación personal con validez legal.',
+
+        contact_title: 'Trazá tu ruta', contact_sub: 'Contanos qué necesitás. Respondemos a la brevedad.',
+        contact_reach: 'Canales de contacto',
+        contact_remote: 'Operamos 100% de forma remota. Atendemos clientes en Argentina y el exterior.',
+        form_name: 'Nombre', form_name_ph: 'Tu nombre completo',
+        form_email: 'Email', form_email_ph: 'tu@email.com',
+        form_subject: 'Servicio', form_subject_ph: 'Seleccioná un servicio',
+        form_opt1: 'Traducción Legal Jurada', form_opt2: 'Traducción Técnica Jurada',
+        form_opt3: 'Traducción Audiovisual', form_opt4: 'Mentoría en Inglés',
+        form_opt5: 'Asesoría Lingüística', form_opt6: 'Otro',
+        form_message: 'Mensaje', form_message_ph: 'Contanos qué necesitás...',
+        form_submit: 'Enviar consulta',
+        success_title: '¡Consulta recibida!',
+        success_msg: 'Gracias por escribirnos. Te responderemos a la brevedad por el mismo canal.',
+
+        footer_brand_desc: 'Red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Especialistas en inglés-español.',
+        footer_col1: 'Servicios', footer_col2: 'Navegación', footer_col3: 'Contacto',
+        footer_s1: 'Legal Jurada', footer_s2: 'Técnica Jurada', footer_s3: 'Audiovisual', footer_s4: 'Mentoría', footer_s5: 'Asesoría',
+        footer_copy: '© 2025 Verba Praxis. Todos los derechos reservados.',
+      },
+
+      en: {
+        nav_about: 'About', nav_services: 'Services', nav_mentoring: 'Mentoring',
+        nav_process: 'Process', nav_faq: 'FAQ', nav_contact: 'Contact', nav_who: 'Clients',
+
+        hero_title_html: 'Every document<br/>has a <em>destination.</em><br/>We chart<br/>the course.',
+        hero_sub: 'Sworn translators registered with the Poder Judicial de la Nación Argentina. Specialists in English-Spanish.',
+        hero_cta: 'Get in touch',
+
+        about_title: 'A network of certified translators',
+        about_text: 'Verba Praxis is a network of sworn translators registered with the Poder Judicial de la Nación Argentina. We work exclusively with the English-Spanish language pair, with deep command of the legal, technical, and cultural registers of both languages. We operate 100% remotely, serving clients in Argentina, Latin America, Europe, and the United States.',
+        stat1_val: '100% Online', stat1_label: 'Remote operation',
+        stat2_label: 'Exclusive language pair',
+        stat3_val: 'Poder Judicial', stat3_label: 'Registered — PJN',
+        stat4_val: 'Worldwide', stat4_label: 'Global clients',
+        pull_quote: 'Precision is not a detail. It is the service.',
+
+        services_title: 'Translation solutions',
+        services_sub: 'Every assignment is handled with the terminological rigor demanded by the English-Spanish pair in professional and legal contexts.',
+
+        s1_title: 'Legal Sworn Translation', s1_sub: 'Traducción Legal Jurada',
+        s1_desc: 'For law firms, multinational companies, and public bodies. Official certification valid before judicial, notarial, and governmental authorities in Argentina and abroad.',
+        s1_d1: 'Contracts', s1_d2: 'Articles of incorporation', s1_d3: 'Notarial powers of attorney',
+        s1_d4: 'Court orders', s1_d5: 'Apostilles', s1_d6: 'Vital certificates', s1_d7: 'Immigration documents',
+
+        s2_title: 'Technical Sworn Translation', s2_sub: 'Traducción Técnica Jurada',
+        s2_desc: 'For engineering, manufacturing, and technology companies. Terminological precision in high-responsibility technical documents.',
+        s2_d1: 'User manuals', s2_d2: 'SDS/MSDS sheets', s2_d3: 'Technical specifications',
+        s2_d4: 'Engineering reports', s2_d5: 'ISO/ASTM standards', s2_d6: 'Patents',
+
+        s3_title: 'Audiovisual Translation', s3_sub: 'Traducción Audiovisual',
+        s3_desc: 'For production companies, streaming platforms, and content agencies. Faithful to the tone and rhythm of the original.',
+        s3_d1: 'SRT/VTT subtitles', s3_d2: 'Dubbing scripts', s3_d3: 'Interface localization',
+
+        s4_title: 'English Mentoring', s4_sub: 'Mentoría en Inglés',
+        s4_desc: 'Individual online sessions designed around your real goals. No exam preparation or certificates.',
+        s4_d1: 'Professional performance', s4_d2: 'Job interviews', s4_d3: 'Pronunciation', s4_d4: 'Travel fluency',
+
+        s5_title: 'Language Advisory', s5_sub: 'Asesoría Lingüística',
+        s5_desc: 'For professionals and companies who need targeted English assistance. No program commitments.',
+        s5_d1: 'Emails', s5_d2: 'Presentations', s5_d3: 'Contracts', s5_d4: 'Communications',
+
+        who_title: 'Who we serve',
+        who_text: 'We provide services to companies and professionals in Argentina, Latin America, and worldwide.',
+        who_cta: 'Check availability',
+        who_c1: 'Law firms', who_c2: 'Multinational companies', who_c3: 'Production companies and agencies',
+        who_c4: 'HR departments', who_c5: 'Individuals with international procedures', who_c6: 'Export-oriented businesses',
+
+        ment_title: 'Language as a tool, not a barrier',
+        ment_text: "Learning English shouldn't feel like studying for an exam. Our sessions start from your real goals: a job interview at an international company, a meeting with clients in New York, a board presentation in London. We chart the course together.",
+        ment_cta: 'Start mentoring',
+        fc1_title: 'Professional performance', fc1_desc: 'Functional English for corporate environments and high-level meetings.',
+        fc2_title: 'Job interviews', fc2_desc: 'Targeted preparation for selection processes at international companies.',
+        fc3_title: 'Pronunciation and clarity', fc3_desc: 'Effective communication with native speakers in high-pressure contexts.',
+        fc4_title: 'Travel fluency', fc4_desc: 'Practical English for getting around, negotiating, and connecting abroad.',
+
+        proc_title: 'From departure to destination',
+        proc_sub: 'Four cartographic steps for every assignment.',
+        proc1_label: 'Coordinates', proc1_desc: 'Share your document or describe your need. We get our bearings.',
+        proc2_label: 'Route', proc2_desc: 'We evaluate and confirm the plan, timeline, and budget. No surprises.',
+        proc3_label: 'Voyage', proc3_desc: 'We translate or mentor with terminological rigor and editorial review.',
+        proc4_label: 'Arrival', proc4_desc: 'We deliver with certification and legal validity. Destination reached.',
+
+        faq_title: 'Frequently asked questions',
+        faq1_q: 'What is a sworn translator?',
+        faq1_a: 'A sworn translator is a professional authorized by the Poder Judicial to produce translations with official certification, which have legal validity before judicial, notarial, and governmental authorities.',
+        faq2_q: 'Is Argentine sworn translation valid abroad?',
+        faq2_a: 'Yes. Argentine sworn translation has international validity, especially in countries that recognize the apostille or maintain judicial cooperation agreements with Argentina.',
+        faq3_q: 'Do you only work with English and Spanish?',
+        faq3_a: 'Yes. We work exclusively with the English-Spanish language pair, which allows us deep command of both linguistic registers.',
+        faq4_q: 'How long does a translation take?',
+        faq4_a: 'It depends on the length and complexity of the document. Most assignments are delivered within 48 to 72 business hours.',
+        faq5_q: 'Can I send the document via WhatsApp?',
+        faq5_a: 'Yes. You can send us the document via WhatsApp or email. We work 100% remotely.',
+        faq6_q: 'Are mentoring sessions individual?',
+        faq6_a: 'Yes. All sessions are one-on-one and are designed around your specific goals.',
+        faq7_q: 'What do I need to start mentoring?',
+        faq7_a: 'Just tell us what you want to achieve. There is no minimum level required and no prior assessment.',
+        faq8_q: 'Do you translate personal documents like birth certificates?',
+        faq8_a: 'Yes. We translate birth, marriage, and death certificates, criminal records, and all types of personal documentation with legal validity.',
+
+        contact_title: 'Chart your route', contact_sub: 'Tell us what you need. We respond promptly.',
+        contact_reach: 'Contact channels',
+        contact_remote: 'We operate 100% remotely. We serve clients in Argentina and worldwide.',
+        form_name: 'Name', form_name_ph: 'Your full name',
+        form_email: 'Email', form_email_ph: 'your@email.com',
+        form_subject: 'Service', form_subject_ph: 'Select a service',
+        form_opt1: 'Legal Sworn Translation', form_opt2: 'Technical Sworn Translation',
+        form_opt3: 'Audiovisual Translation', form_opt4: 'English Mentoring',
+        form_opt5: 'Language Advisory', form_opt6: 'Other',
+        form_message: 'Message', form_message_ph: 'Tell us what you need...',
+        form_submit: 'Send inquiry',
+        success_title: 'Inquiry received!',
+        success_msg: 'Thank you for reaching out. We will respond shortly through the same channel.',
+
+        footer_brand_desc: 'A network of sworn translators registered with the Poder Judicial de la Nación Argentina. Specialists in English-Spanish.',
+        footer_col1: 'Services', footer_col2: 'Navigation', footer_col3: 'Contact',
+        footer_s1: 'Legal Sworn', footer_s2: 'Technical Sworn', footer_s3: 'Audiovisual', footer_s4: 'Mentoring', footer_s5: 'Advisory',
+        footer_copy: '© 2025 Verba Praxis. All rights reserved.',
+      }
+    };
+
+    let currentLang = 'es';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const loc = locales[lang];
+
+      // Hero title (innerHTML)
+      const heroTitle = document.getElementById('hero-title');
+      if (heroTitle) heroTitle.innerHTML = loc.hero_title_html;
+
+      // All data-i18n text nodes
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (loc[key] === undefined) return;
+        if (el.tagName === 'OPTION') {
+          el.textContent = loc[key];
+        } else if (el.id !== 'hero-title') {
+          el.textContent = loc[key];
+        }
+      });
+
+      // Placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (loc[key]) el.placeholder = loc[key];
+      });
+
+      // Lang buttons (desktop + mobile)
+      ['btn-es','m-btn-es'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('active', lang === 'es');
+      });
+      ['btn-en','m-btn-en'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('active', lang === 'en');
+      });
+
+      document.documentElement.lang = lang;
+    }
+
+    /* ===== NAV SCROLL ===== */
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ===== HAMBURGER ===== */
+    function toggleMenu() {
+      document.getElementById('hamburger').classList.toggle('open');
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+    function closeMenu() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobile-menu').classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobile-menu');
+      const hamburger = document.getElementById('hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    /* ===== FAQ ACCORDION ===== */
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    /* ===== CONTACT FORM ===== */
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+    }
+
+    /* ===== INTERSECTION OBSERVER (scroll reveals) ===== */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ===== ACTIVE NAV LINKS ===== */
+    const sectionObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('section[id]').forEach(s => sectionObs.observe(s));
+  </script>
+</body>
+</html>

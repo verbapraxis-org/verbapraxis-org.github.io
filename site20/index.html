@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es" data-locale="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verba Praxis — Servicios de Traducción e Idiomas</title>
+  <meta name="description" content="Red de traductores públicos matriculados. Traducción juramentada, técnica, audiovisual y formación en inglés profesional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:        #FFFFFF;
+      --cambridge:    #003266;
+      --purple:       #7E1F86;
+      --light-purple: #F5F0FF;
+      --light-blue:   #E8EEF5;
+      --text-dark:    #1A1A1A;
+      --text-mid:     #444444;
+      --text-light:   #6B6B6B;
+      --border:       #C8D5E4;
+      --serif:        'Libre Baskerville', Georgia, serif;
+      --sans:         'Source Sans 3', Arial, sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-dark);
+      background: var(--white);
+    }
+
+    a { color: var(--cambridge); text-decoration: none; }
+    a:hover { color: var(--purple); }
+
+    /* ── Underline hover accent (purple ::after) ─────────────────── */
+    .ul-hover {
+      position: relative;
+      display: inline-block;
+    }
+    .ul-hover::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 2px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .22s ease;
+    }
+    .ul-hover:hover::after { transform: scaleX(1); }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+    /* ── Utility Bar ─────────────────────────────────────────────── */
+    #utility-bar {
+      background: var(--cambridge);
+      color: rgba(255,255,255,.82);
+      font-size: 12.5px;
+      font-family: var(--sans);
+      font-weight: 400;
+      letter-spacing: .03em;
+      padding: 6px 0;
+    }
+    #utility-bar .inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    #utility-bar .left-note {
+      font-style: italic;
+      opacity: .78;
+    }
+    #utility-bar .right-controls {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    #utility-bar a {
+      color: rgba(255,255,255,.85);
+      font-size: 12.5px;
+    }
+    #utility-bar a:hover { color: #fff; }
+
+    /* Locale toggle */
+    .locale-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 3px;
+      overflow: hidden;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+    .locale-toggle button {
+      background: none;
+      border: none;
+      padding: 2px 9px;
+      color: rgba(255,255,255,.65);
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      transition: background .18s, color .18s;
+    }
+    .locale-toggle button.active {
+      background: rgba(255,255,255,.18);
+      color: #fff;
+    }
+    .locale-toggle button:hover:not(.active) {
+      background: rgba(255,255,255,.09);
+      color: rgba(255,255,255,.9);
+    }
+    .locale-toggle .sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,.3);
+    }
+
+    /* ── Site Header ─────────────────────────────────────────────── */
+    #site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0 24px;
+      text-align: center;
+    }
+    .header-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Coat of Arms SVG */
+    .coat-of-arms {
+      width: 68px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+
+    .site-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cambridge);
+      letter-spacing: .04em;
+      line-height: 1.1;
+    }
+    .site-tagline {
+      font-family: var(--sans);
+      font-size: 13.5px;
+      color: var(--text-mid);
+      letter-spacing: .06em;
+    }
+    .site-est {
+      font-family: var(--serif);
+      font-size: 11px;
+      font-variant: small-caps;
+      letter-spacing: .14em;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* ── Category Nav ────────────────────────────────────────────── */
+    #cat-nav {
+      background: var(--cambridge);
+      border-bottom: 3px solid #002050;
+    }
+    #cat-nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    #cat-nav li a {
+      display: block;
+      padding: 12px 22px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      color: rgba(255,255,255,.82);
+      text-transform: uppercase;
+      position: relative;
+      transition: color .18s, background .18s;
+    }
+    #cat-nav li a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 3px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .22s ease;
+    }
+    #cat-nav li a:hover {
+      color: #fff;
+      background: rgba(255,255,255,.06);
+    }
+    #cat-nav li a:hover::after { transform: scaleX(1); }
+
+    /* ── Breadcrumb ──────────────────────────────────────────────── */
+    #breadcrumb {
+      background: var(--light-blue);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 0;
+      font-size: 12px;
+      color: var(--text-light);
+      font-family: var(--sans);
+    }
+    #breadcrumb span { margin: 0 5px; opacity: .55; }
+
+    /* ── Page Layout ─────────────────────────────────────────────── */
+    #page-body {
+      max-width: 1180px;
+      margin: 32px auto 0;
+      padding: 0 24px 60px;
+      display: grid;
+      grid-template-columns: 65% 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ── Hero Panel ──────────────────────────────────────────────── */
+    #hero {
+      background: var(--light-blue);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--cambridge);
+      padding: 28px 28px 24px;
+      margin-bottom: 32px;
+    }
+    #hero h1 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--cambridge);
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+    #hero p {
+      font-size: 15px;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+      max-width: 560px;
+    }
+    .cta-primary {
+      display: inline-block;
+      background: var(--cambridge);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      padding: 10px 22px;
+      border: 2px solid var(--cambridge);
+      transition: background .2s, color .2s;
+      text-decoration: none;
+    }
+    .cta-primary:hover {
+      background: var(--white);
+      color: var(--cambridge);
+    }
+
+    /* ── Section Headings ────────────────────────────────────────── */
+    .section-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--cambridge);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* ── Catalogue Entry ─────────────────────────────────────────── */
+    .catalogue-section { margin-bottom: 40px; }
+
+    .entry {
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+      background: var(--white);
+    }
+    .entry-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #FAFBFD;
+    }
+    .entry-doi {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .entry-doi .doi-icon {
+      display: inline-block;
+      background: var(--cambridge);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 2px 5px;
+      border-radius: 2px;
+    }
+    .entry-title {
+      font-family: var(--serif);
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .entry-title em {
+      font-style: italic;
+      color: var(--text-mid);
+      font-size: 15px;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .badge {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .badge-blue {
+      background: var(--light-blue);
+      color: var(--cambridge);
+      border: 1px solid #C8D5E4;
+    }
+    .badge-purple {
+      background: var(--light-purple);
+      color: var(--purple);
+      border: 1px solid #D9CCF0;
+    }
+
+    .entry-body { padding: 18px 20px; }
+
+    .entry-abstract {
+      font-size: 14.5px;
+      color: var(--text-mid);
+      line-height: 1.72;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .entry-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 20px;
+      margin-bottom: 16px;
+    }
+    .meta-block h4 {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    .meta-block p, .meta-block ul {
+      font-size: 13.5px;
+      color: var(--text-dark);
+      list-style: none;
+    }
+    .meta-block ul li::before {
+      content: '·';
+      margin-right: 6px;
+      color: var(--cambridge);
+      font-weight: 700;
+    }
+
+    .format-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .fmt-tag {
+      font-size: 11.5px;
+      font-family: var(--sans);
+      font-weight: 600;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      padding: 2px 9px;
+      letter-spacing: .05em;
+    }
+
+    .entry-footer {
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
+      background: #FAFBFD;
+    }
+    .entry-cta {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--cambridge);
+      border-bottom: 1px solid var(--cambridge);
+      padding-bottom: 1px;
+      position: relative;
+    }
+    .entry-cta::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -1px;
+      width: 100%; height: 1px;
+      background: var(--purple);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .2s;
+    }
+    .entry-cta:hover::after { transform: scaleX(1); }
+    .entry-cta:hover { color: var(--purple); }
+
+    /* ── Insight Notes ───────────────────────────────────────────── */
+    .insights-section { margin-bottom: 40px; }
+    .insight-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .insight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .insight-item:last-child { border-bottom: none; }
+    .insight-num {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--border);
+      font-weight: 700;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 28px;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .insight-content h3 {
+      font-family: var(--serif);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--cambridge);
+      margin-bottom: 2px;
+      line-height: 1.35;
+    }
+    .insight-content h3 em {
+      font-style: italic;
+      color: var(--text-mid);
+      font-size: 13.5px;
+    }
+    .insight-content p {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ── FAQ ─────────────────────────────────────────────────────── */
+    .faq-section { margin-bottom: 40px; }
+    .faq-list { border: 1px solid var(--border); }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 14px 18px;
+      font-family: var(--serif);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      transition: background .15s;
+    }
+    .faq-q:hover { background: var(--light-blue); }
+    .faq-q .faq-arrow {
+      font-size: 14px;
+      color: var(--cambridge);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(90deg); }
+    .faq-a {
+      display: none;
+      padding: 0 18px 16px 18px;
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      background: #FAFBFD;
+      padding-top: 14px;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── Inquiry Form ────────────────────────────────────────────── */
+    .form-section { margin-bottom: 40px; }
+    .form-wrap {
+      border: 1px solid var(--border);
+      padding: 24px 24px 20px;
+      background: var(--light-blue);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .form-field { display: flex; flex-direction: column; gap: 5px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--text-dark);
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      background: var(--white);
+      outline: none;
+      transition: border-color .18s;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--cambridge);
+    }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      background: var(--cambridge);
+      color: #fff;
+      border: 2px solid var(--cambridge);
+      padding: 10px 26px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .form-submit:hover { background: var(--white); color: var(--cambridge); }
+    .form-success {
+      display: none;
+      background: var(--light-purple);
+      border: 1px solid #C9AEDE;
+      padding: 18px 20px;
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--purple);
+      text-align: center;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────────── */
+    #sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 24px;
+    }
+
+    .sidebar-card {
+      border: 1px solid var(--border);
+      padding: 20px;
+      background: var(--white);
+    }
+    .sidebar-card.highlight {
+      background: var(--cambridge);
+      border-color: var(--cambridge);
+      color: rgba(255,255,255,.9);
+    }
+    .sidebar-card h3 {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .sidebar-card.highlight h3 { color: #fff; }
+    .sidebar-card p { font-size: 13.5px; color: var(--text-mid); margin-bottom: 10px; line-height: 1.65; }
+    .sidebar-card.highlight p { color: rgba(255,255,255,.82); }
+    .sidebar-card .cta-white {
+      display: inline-block;
+      background: var(--white);
+      color: var(--cambridge);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      padding: 9px 18px;
+      margin-top: 4px;
+      text-decoration: none;
+      transition: opacity .18s;
+    }
+    .sidebar-card .cta-white:hover { opacity: .88; }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .creds-block {
+      background: var(--light-blue);
+      border-left: 3px solid var(--cambridge);
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .creds-block p { color: var(--text-mid); margin-bottom: 5px; font-size: 13px; }
+    .creds-block strong { color: var(--cambridge); font-weight: 700; }
+
+    .related-list { list-style: none; margin-top: 8px; }
+    .related-list li {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+    }
+    .related-list li:last-child { border-bottom: none; }
+    .related-list .doi-ref {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: var(--text-light);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .contact-block { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .contact-item .icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+    .icon-wa { background: #25D366; color: #fff; }
+    .icon-em { background: var(--light-blue); color: var(--cambridge); }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    #site-footer {
+      background: var(--cambridge);
+      color: rgba(255,255,255,.72);
+      font-family: var(--sans);
+      font-size: 12.5px;
+      padding: 24px 0 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    #site-footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    #site-footer .footer-name {
+      font-family: var(--serif);
+      font-size: 14px;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .06em;
+    }
+    #site-footer a { color: rgba(255,255,255,.75); }
+    #site-footer a:hover { color: #fff; }
+
+    /* ── i18n visibility ─────────────────────────────────────────── */
+    [data-locale="es"] [lang="en"] { display: none; }
+    [data-locale="en"] [lang="es"] { display: none; }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      #page-body { grid-template-columns: 1fr; }
+      #sidebar { position: static; }
+      .entry-meta { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      #cat-nav ul { flex-wrap: wrap; }
+      #cat-nav li a { padding: 10px 14px; font-size: 12px; }
+      #hero h1 { font-size: 18px; }
+      .site-name { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Utility Bar ─────────────────────────────────────────────── -->
+<div id="utility-bar">
+  <div class="container inner">
+    <span class="left-note" lang="es">Red de traductores públicos matriculados · Argentina</span>
+    <span class="left-note" lang="en">Network of registered sworn translators · Argentina</span>
+    <div class="right-controls">
+      <a href="mailto:verbapraxis@outlook.com" class="ul-hover">verbapraxis@outlook.com</a>
+      <div class="locale-toggle" role="group" aria-label="Language selector">
+        <button id="btn-es" class="active" aria-pressed="true" onclick="setLocale('es')">ES</button>
+        <div class="sep"></div>
+        <button id="btn-en" aria-pressed="false" onclick="setLocale('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Site Header ─────────────────────────────────────────────── -->
+<header id="site-header">
+  <div class="container header-inner">
+    <!-- Coat of Arms SVG -->
+    <svg class="coat-of-arms" viewBox="0 0 68 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Verba Praxis escudo">
+      <!-- Shield body -->
+      <path d="M4 4 H64 V52 C64 68 34 78 34 78 C34 78 4 68 4 52 Z" fill="#003266" stroke="#7E1F86" stroke-width="2"/>
+      <!-- Inner shield -->
+      <path d="M11 10 H57 V50 C57 63 34 72 34 72 C34 72 11 63 11 50 Z" fill="#002050"/>
+      <!-- VP monogram -->
+      <text x="34" y="48" font-family="Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#ffffff" letter-spacing="1">VP</text>
+      <!-- Crown -->
+      <rect x="22" y="2" width="24" height="4" rx="1" fill="#7E1F86"/>
+      <rect x="19" y="4" width="4" height="8" rx="1" fill="#7E1F86"/>
+      <rect x="32" y="0" width="4" height="10" rx="1" fill="#7E1F86"/>
+      <rect x="45" y="4" width="4" height="8" rx="1" fill="#7E1F86"/>
+      <!-- Laurels left -->
+      <ellipse cx="10" cy="38" rx="5" ry="8" fill="none" stroke="#7E1F86" stroke-width="1.5" transform="rotate(-20 10 38)"/>
+      <ellipse cx="8" cy="46" rx="5" ry="8" fill="none" stroke="#7E1F86" stroke-width="1.5" transform="rotate(-25 8 46)"/>
+      <!-- Laurels right -->
+      <ellipse cx="58" cy="38" rx="5" ry="8" fill="none" stroke="#7E1F86" stroke-width="1.5" transform="rotate(20 58 38)"/>
+      <ellipse cx="60" cy="46" rx="5" ry="8" fill="none" stroke="#7E1F86" stroke-width="1.5" transform="rotate(25 60 46)"/>
+      <!-- Stars -->
+      <text x="18" y="27" font-family="serif" font-size="8" fill="#7E1F86">★</text>
+      <text x="43" y="27" font-family="serif" font-size="8" fill="#7E1F86">★</text>
+    </svg>
+
+    <div>
+      <div class="site-name">VERBA PRAXIS</div>
+      <div class="site-tagline" lang="es">Servicios de Traducción e Idiomas</div>
+      <div class="site-tagline" lang="en">Translation and Language Services</div>
+      <div class="site-est">Est. MMXXVI</div>
+    </div>
+  </div>
+</header>
+
+<!-- ── Category Nav ────────────────────────────────────────────── -->
+<nav id="cat-nav" aria-label="Site navigation">
+  <div class="container">
+    <ul>
+      <li>
+        <a href="#catalogo" class="ul-hover" lang="es">Catálogo</a>
+        <a href="#catalogo" class="ul-hover" lang="en">Catalogue</a>
+      </li>
+      <li>
+        <a href="#sobre-nosotros" class="ul-hover" lang="es">Sobre Nosotros</a>
+        <a href="#sobre-nosotros" class="ul-hover" lang="en">About Us</a>
+      </li>
+      <li>
+        <a href="#idiomas" class="ul-hover" lang="es">Programa de Idiomas</a>
+        <a href="#idiomas" class="ul-hover" lang="en">Language Programme</a>
+      </li>
+      <li>
+        <a href="#consulta" class="ul-hover" lang="es">Consulta</a>
+        <a href="#consulta" class="ul-hover" lang="en">Enquiry</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Breadcrumb ──────────────────────────────────────────────── -->
+<div id="breadcrumb">
+  <div class="container">
+    <span lang="es">Verba Praxis</span>
+    <span lang="en">Verba Praxis</span>
+    <span>›</span>
+    <span lang="es">Catálogo de Servicios</span>
+    <span lang="en">Service Catalogue</span>
+  </div>
+</div>
+
+<!-- ── Page Body ──────────────────────────────────────────────── -->
+<div id="page-body">
+
+  <!-- ── Main Column ────────────────────────────────────────── -->
+  <main>
+
+    <!-- Hero -->
+    <section id="hero">
+      <h1 lang="es">Servicios de Traducción Certificada y Formación en Idiomas</h1>
+      <h1 lang="en">Certified Translation Services and Language Formation Programmes</h1>
+      <p lang="es">Bienvenido al catálogo de servicios de Verba Praxis. Cada entrada es identificada por un código DOI institucional. Para información detallada o presupuesto, utilice el canal de consulta formal o el acceso directo a WhatsApp.</p>
+      <p lang="en">Welcome to the Verba Praxis service catalogue. Each entry is identified by an institutional DOI code. For detailed information or quotations, please use the formal enquiry channel or the direct WhatsApp access.</p>
+      <a href="https://wa.me/5492215972410" class="cta-primary" target="_blank" rel="noopener">
+        <span lang="es">Agenda tu sesión de diagnóstico →</span>
+        <span lang="en">Schedule your diagnostic session →</span>
+      </a>
+    </section>
+
+    <!-- Catalogue -->
+    <section class="catalogue-section" id="catalogo">
+      <p class="section-label" lang="es">Catálogo de Servicios</p>
+      <p class="section-label" lang="en">Service Catalogue</p>
+      <h2 class="section-title" lang="es">Entradas de Catálogo</h2>
+      <h2 class="section-title" lang="en">Catalogue Entries</h2>
+
+      <!-- VP-TL-001 -->
+      <article class="entry" id="vp-tl-001">
+        <div class="entry-header">
+          <div class="entry-doi">
+            <span class="doi-icon">DOI</span>
+            VP-TL-001
+          </div>
+          <div class="entry-title">
+            <span lang="es">Traducción Legal Juramentada</span>
+            <span lang="en">Legal Sworn Translation</span>
+            <br>
+            <em lang="es">Certified legal document translation between English and Spanish</em>
+            <em lang="en">Traducción certificada de documentos legales entre inglés y español</em>
+          </div>
+          <div class="badges">
+            <span class="badge badge-blue" lang="es">Jurídico-Legal</span>
+            <span class="badge badge-blue" lang="en">Legal-Juridical</span>
+            <span class="badge badge-purple">Fe Pública</span>
+            <span class="badge badge-blue">EN ↔ ES</span>
+          </div>
+        </div>
+        <div class="entry-body">
+          <p class="entry-abstract" lang="es">Servicio de traducción certificada de documentos jurídicos y legales entre inglés y español. Las traducciones son realizadas por traductores públicos matriculados ante el Poder Judicial de la Nación Argentina, otorgándoles Fe Pública con validez ante organismos judiciales, notariales y gubernamentales en Argentina y el exterior. El servicio abarca contratos comerciales, instrumentos notariales, documentación migratoria y certificados oficiales.</p>
+          <p class="entry-abstract" lang="en">A certified translation service for legal and juridical documents between English and Spanish. Translations are produced by sworn translators registered with the Poder Judicial de la Nación Argentina, granting them the status of Public Faith documents accepted by judicial, notarial, and governmental bodies in Argentina and abroad. The service covers commercial contracts, notarial instruments, immigration documentation, and official certificates.</p>
+          <div class="entry-meta">
+            <div class="meta-block">
+              <h4 lang="es">Alcance del Servicio</h4>
+              <h4 lang="en">Service Scope</h4>
+              <ul>
+                <li lang="es">Contratos comerciales</li><li lang="en">Commercial contracts</li>
+                <li lang="es">Actas constitutivas</li><li lang="en">Articles of incorporation</li>
+                <li lang="es">Poderes notariales</li><li lang="en">Notarial powers of attorney</li>
+                <li lang="es">Órdenes judiciales</li><li lang="en">Judicial orders</li>
+                <li lang="es">Apostillas</li><li lang="en">Apostilles</li>
+                <li lang="es">Certificados de nacimiento, matrimonio y defunción</li><li lang="en">Birth, marriage, and death certificates</li>
+                <li lang="es">Documentos migratorios</li><li lang="en">Immigration documents</li>
+                <li lang="es">Escrituras notariales</li><li lang="en">Notarial deeds</li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h4 lang="es">Respondente Ideal</h4>
+              <h4 lang="en">Ideal Respondent</h4>
+              <p lang="es">Estudios jurídicos, empresas multinacionales, organismos públicos, particulares con trámites internacionales.</p>
+              <p lang="en">Law firms, multinational corporations, public agencies, private individuals with international proceedings.</p>
+            </div>
+          </div>
+          <div class="format-tags">
+            <span class="fmt-tag">Online</span>
+            <span class="fmt-tag" lang="es">Juramentada</span><span class="fmt-tag" lang="en">Sworn</span>
+            <span class="fmt-tag" lang="es">Certificada</span><span class="fmt-tag" lang="en">Certified</span>
+            <span class="fmt-tag">Fe Pública</span>
+          </div>
+        </div>
+        <div class="entry-footer">
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="es">Solicitar presupuesto →</a>
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="en">Request a quotation →</a>
+        </div>
+      </article>
+
+      <!-- VP-TT-002 -->
+      <article class="entry" id="vp-tt-002">
+        <div class="entry-header">
+          <div class="entry-doi">
+            <span class="doi-icon">DOI</span>
+            VP-TT-002
+          </div>
+          <div class="entry-title">
+            <span lang="es">Traducción Técnica Juramentada</span>
+            <span lang="en">Technical Sworn Translation</span>
+            <br>
+            <em lang="es">Traducción juramentada de documentación técnica especializada</em>
+            <em lang="en">Sworn translation of specialised technical documentation</em>
+          </div>
+          <div class="badges">
+            <span class="badge badge-blue" lang="es">Técnico-Industrial</span>
+            <span class="badge badge-blue" lang="en">Technical-Industrial</span>
+            <span class="badge badge-purple">Fe Pública</span>
+            <span class="badge badge-blue">EN ↔ ES</span>
+          </div>
+        </div>
+        <div class="entry-body">
+          <p class="entry-abstract" lang="es">Traducción juramentada de documentación técnica especializada en los sectores de ingeniería, manufactura y tecnología. Las traducciones cumplen con los requisitos de precisión terminológica exigidos por normas internacionales y organismos regulatorios. El servicio abarca manuales, fichas de seguridad, especificaciones técnicas y documentación de patentes.</p>
+          <p class="entry-abstract" lang="en">Sworn translation of specialised technical documentation in the engineering, manufacturing, and technology sectors. Translations comply with the terminological precision requirements of international standards and regulatory bodies. The service covers user manuals, safety data sheets, technical specifications, and patent documentation.</p>
+          <div class="entry-meta">
+            <div class="meta-block">
+              <h4 lang="es">Alcance del Servicio</h4>
+              <h4 lang="en">Service Scope</h4>
+              <ul>
+                <li lang="es">Manuales de usuario</li><li lang="en">User manuals</li>
+                <li lang="es">Fichas SDS/MSDS</li><li lang="en">SDS/MSDS sheets</li>
+                <li lang="es">Especificaciones técnicas</li><li lang="en">Technical specifications</li>
+                <li lang="es">Informes de ingeniería</li><li lang="en">Engineering reports</li>
+                <li lang="es">Normas ISO/ASTM</li><li lang="en">ISO/ASTM standards</li>
+                <li lang="es">Documentación de patentes</li><li lang="en">Patent documentation</li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h4 lang="es">Respondente Ideal</h4>
+              <h4 lang="en">Ideal Respondent</h4>
+              <p lang="es">Empresas industriales, fabricantes, exportadores, laboratorios.</p>
+              <p lang="en">Industrial companies, manufacturers, exporters, laboratories.</p>
+            </div>
+          </div>
+          <div class="format-tags">
+            <span class="fmt-tag">Online</span>
+            <span class="fmt-tag" lang="es">Juramentada</span><span class="fmt-tag" lang="en">Sworn</span>
+            <span class="fmt-tag" lang="es">Certificada</span><span class="fmt-tag" lang="en">Certified</span>
+            <span class="fmt-tag">Fe Pública</span>
+          </div>
+        </div>
+        <div class="entry-footer">
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="es">Solicitar presupuesto →</a>
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="en">Request a quotation →</a>
+        </div>
+      </article>
+
+      <!-- VP-AV-003 -->
+      <article class="entry" id="vp-av-003">
+        <div class="entry-header">
+          <div class="entry-doi">
+            <span class="doi-icon">DOI</span>
+            VP-AV-003
+          </div>
+          <div class="entry-title">
+            <span lang="es">Traducción Audiovisual</span>
+            <span lang="en">Audiovisual Translation</span>
+            <br>
+            <em lang="es">Localización de contenido audiovisual y multimedia</em>
+            <em lang="en">Localisation of audiovisual and multimedia content</em>
+          </div>
+          <div class="badges">
+            <span class="badge badge-blue" lang="es">Audiovisual</span>
+            <span class="badge badge-blue" lang="en">Audiovisual</span>
+            <span class="badge badge-purple" lang="es">Localización</span>
+            <span class="badge badge-purple" lang="en">Localisation</span>
+            <span class="badge badge-blue">EN ↔ ES</span>
+          </div>
+        </div>
+        <div class="entry-body">
+          <p class="entry-abstract" lang="es">Servicio de localización de contenido audiovisual y multimedia entre inglés y español. El servicio preserva la fidelidad tonal y rítmica del material original, adaptándolo a las convenciones lingüísticas del idioma destino. Compatible con los principales formatos de subtitulado utilizados por plataformas de distribución digital.</p>
+          <p class="entry-abstract" lang="en">A localisation service for audiovisual and multimedia content between English and Spanish. The service preserves the tonal and rhythmic fidelity of the source material, adapting it to the linguistic conventions of the target language. Compatible with the principal subtitle formats used by digital distribution platforms.</p>
+          <div class="entry-meta">
+            <div class="meta-block">
+              <h4 lang="es">Alcance del Servicio</h4>
+              <h4 lang="en">Service Scope</h4>
+              <ul>
+                <li lang="es">Subtítulos SRT/VTT</li><li lang="en">SRT/VTT subtitles</li>
+                <li lang="es">Guiones de doblaje</li><li lang="en">Dubbing scripts</li>
+                <li lang="es">Localización de interfaces digitales</li><li lang="en">Digital interface localisation</li>
+                <li lang="es">Contenido corporativo</li><li lang="en">Corporate content</li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h4 lang="es">Respondente Ideal</h4>
+              <h4 lang="en">Ideal Respondent</h4>
+              <p lang="es">Productoras, plataformas de streaming, agencias de comunicación corporativa.</p>
+              <p lang="en">Production companies, streaming platforms, corporate communication agencies.</p>
+            </div>
+          </div>
+          <div class="format-tags">
+            <span class="fmt-tag">Online</span>
+            <span class="fmt-tag">SRT / VTT</span>
+            <span class="fmt-tag" lang="es">Corporativo</span><span class="fmt-tag" lang="en">Corporate</span>
+          </div>
+        </div>
+        <div class="entry-footer">
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="es">Solicitar presupuesto →</a>
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="en">Request a quotation →</a>
+        </div>
+      </article>
+
+      <!-- VP-ME-004 -->
+      <article class="entry" id="vp-me-004">
+        <div class="entry-header">
+          <div class="entry-doi">
+            <span class="doi-icon">DOI</span>
+            VP-ME-004
+          </div>
+          <div class="entry-title">
+            <span lang="es">Mentoría en Inglés</span>
+            <span lang="en">English Mentoring Programme</span>
+            <br>
+            <em lang="es">Sesiones individuales de inglés para contextos profesionales reales</em>
+            <em lang="en">Individual sessions for English in real professional contexts</em>
+          </div>
+          <div class="badges">
+            <span class="badge badge-blue" lang="es">Formación</span>
+            <span class="badge badge-blue" lang="en">Formation</span>
+            <span class="badge badge-purple" lang="es">Profesional</span>
+            <span class="badge badge-purple" lang="en">Professional</span>
+          </div>
+        </div>
+        <div class="entry-body">
+          <p class="entry-abstract" lang="es">Programa de sesiones individuales orientadas al desempeño en inglés en contextos profesionales reales. El programa no contempla preparación para exámenes estandarizados ni emisión de certificados de nivel. El enfoque se centra exclusivamente en situaciones concretas: entrevistas de trabajo, reuniones con equipos internacionales, presentaciones corporativas y comunicación en contextos de viaje.</p>
+          <p class="entry-abstract" lang="en">A programme of individual sessions oriented toward English performance in real professional contexts. The programme does not include preparation for standardised examinations or the issuance of level certificates. The focus is placed exclusively on concrete situations: job interviews, meetings with international teams, corporate presentations, and communication in travel contexts.</p>
+          <div class="entry-meta">
+            <div class="meta-block">
+              <h4 lang="es">Áreas de Enfoque</h4>
+              <h4 lang="en">Focus Areas</h4>
+              <ul>
+                <li lang="es">Rendimiento profesional</li><li lang="en">Professional performance</li>
+                <li lang="es">Entrevistas de trabajo</li><li lang="en">Job interviews</li>
+                <li lang="es">Pronunciación y claridad</li><li lang="en">Pronunciation and clarity</li>
+                <li lang="es">Fluidez para viajes</li><li lang="en">Travel fluency</li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h4 lang="es">Respondente Ideal</h4>
+              <h4 lang="en">Ideal Respondent</h4>
+              <p lang="es">Profesionales que necesitan desempeñarse en inglés en contextos laborales específicos, sin necesidad de certificación formal.</p>
+              <p lang="en">Professionals who need to perform in English in specific work contexts, without requiring formal certification.</p>
+            </div>
+          </div>
+          <div class="format-tags">
+            <span class="fmt-tag">Online</span>
+            <span class="fmt-tag" lang="es">Sesiones 1:1</span><span class="fmt-tag" lang="en">1:1 Sessions</span>
+            <span class="fmt-tag" lang="es">Sin nivel mínimo</span><span class="fmt-tag" lang="en">No minimum level</span>
+          </div>
+        </div>
+        <div class="entry-footer">
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="es">Consultar disponibilidad →</a>
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="en">Enquire about availability →</a>
+        </div>
+      </article>
+
+      <!-- VP-EA-005 -->
+      <article class="entry" id="vp-ea-005">
+        <div class="entry-header">
+          <div class="entry-doi">
+            <span class="doi-icon">DOI</span>
+            VP-EA-005
+          </div>
+          <div class="entry-title">
+            <span lang="es">Asesoría en Inglés</span>
+            <span lang="en">English Advisory</span>
+            <br>
+            <em lang="es">Revisión y mejora de comunicaciones escritas en inglés</em>
+            <em lang="en">Review and improvement of written communications in English</em>
+          </div>
+          <div class="badges">
+            <span class="badge badge-blue" lang="es">Comunicación Escrita</span>
+            <span class="badge badge-blue" lang="en">Written Communication</span>
+            <span class="badge badge-purple" lang="es">Puntual</span>
+            <span class="badge badge-purple" lang="en">Punctual</span>
+          </div>
+        </div>
+        <div class="entry-body">
+          <p class="entry-abstract" lang="es">Servicio de revisión y mejora de comunicaciones escritas en inglés para profesionales y organizaciones. Orientado a quienes requieren asistencia puntual sin comprometerse con un programa de formación estructurado. Abarca emails, presentaciones, contratos y comunicaciones corporativas en inglés.</p>
+          <p class="entry-abstract" lang="en">A service for the review and improvement of written communications in English for professionals and organisations. Intended for those who require punctual assistance without committing to a structured formation programme. Covers emails, presentations, contracts, and corporate communications in English.</p>
+          <div class="entry-meta">
+            <div class="meta-block">
+              <h4 lang="es">Alcance del Servicio</h4>
+              <h4 lang="en">Service Scope</h4>
+              <ul>
+                <li lang="es">Emails profesionales</li><li lang="en">Professional emails</li>
+                <li lang="es">Presentaciones</li><li lang="en">Presentations</li>
+                <li lang="es">Contratos</li><li lang="en">Contracts</li>
+                <li lang="es">Comunicaciones corporativas</li><li lang="en">Corporate communications</li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h4 lang="es">Respondente Ideal</h4>
+              <h4 lang="en">Ideal Respondent</h4>
+              <p lang="es">Profesionales y organizaciones que necesitan asistencia puntual en inglés escrito sin compromisos de programa.</p>
+              <p lang="en">Professionals and organisations requiring punctual assistance with written English without programme commitments.</p>
+            </div>
+          </div>
+          <div class="format-tags">
+            <span class="fmt-tag">Online</span>
+            <span class="fmt-tag" lang="es">Puntual</span><span class="fmt-tag" lang="en">Punctual</span>
+            <span class="fmt-tag" lang="es">Sin compromisos</span><span class="fmt-tag" lang="en">No commitments</span>
+          </div>
+        </div>
+        <div class="entry-footer">
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="es">Solicitar asesoría →</a>
+          <a href="https://wa.me/5492215972410" class="entry-cta" target="_blank" rel="noopener" lang="en">Request advisory →</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Insight Notes -->
+    <section class="insights-section">
+      <p class="section-label" lang="es">Notas de Referencia</p>
+      <p class="section-label" lang="en">Reference Notes</p>
+      <h2 class="section-title" lang="es">Notas de Perspectiva Institucional</h2>
+      <h2 class="section-title" lang="en">Institutional Perspective Notes</h2>
+      <div class="insight-list">
+        <div class="insight-item">
+          <div class="insight-num">01</div>
+          <div class="insight-content">
+            <h3>
+              <span lang="es">La traducción juramentada y su validez en el derecho internacional privado</span>
+              <span lang="en">Sworn Translation and Its Validity in Private International Law</span>
+              <br>
+              <em lang="es">— Nota institucional sobre marcos normativos aplicables</em>
+              <em lang="en">— Institutional note on applicable regulatory frameworks</em>
+            </h3>
+            <p lang="es">Referencia sobre los fundamentos legales de la traducción pública en Argentina y su reconocimiento ante organismos extranjeros.</p>
+            <p lang="en">Reference on the legal foundations of public translation in Argentina and its recognition before foreign bodies.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-num">02</div>
+          <div class="insight-content">
+            <h3>
+              <span lang="es">El inglés como competencia profesional: más allá del nivel certificado</span>
+              <span lang="en">English as a Professional Competency: Beyond Certified Levels</span>
+              <br>
+              <em lang="es">— Nota sobre formación orientada al desempeño real</em>
+              <em lang="en">— Note on performance-oriented formation</em>
+            </h3>
+            <p lang="es">Análisis de la distinción entre certificación de nivel y competencia funcional en contextos laborales internacionales.</p>
+            <p lang="en">Analysis of the distinction between level certification and functional competency in international work contexts.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-num">03</div>
+          <div class="insight-content">
+            <h3>
+              <span lang="es">Criterios para la selección de un servicio de traducción certificada</span>
+              <span lang="en">Criteria for the Selection of a Certified Translation Service</span>
+              <br>
+              <em lang="es">— Nota de orientación para clientes institucionales</em>
+              <em lang="en">— Orientation note for institutional clients</em>
+            </h3>
+            <p lang="es">Guía de evaluación para organizaciones que requieren traducción juramentada con validez legal internacional.</p>
+            <p lang="en">Evaluation guide for organisations requiring sworn translation with international legal validity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="sobre-nosotros">
+      <p class="section-label" lang="es">Preguntas Frecuentes</p>
+      <p class="section-label" lang="en">Frequently Asked Questions</p>
+      <h2 class="section-title" lang="es">Consultas Habituales</h2>
+      <h2 class="section-title" lang="en">Common Enquiries</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Qué es un traductor público matriculado?</span>
+            <span lang="en">What is a registered sworn translator?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">Un traductor público matriculado es un profesional habilitado por el Poder Judicial de la Nación Argentina para conferir Fe Pública a sus traducciones. Esta habilitación implica que sus traducciones tienen valor legal equivalente al del documento original ante organismos judiciales, notariales y gubernamentales. La matrícula es el mecanismo de control profesional que garantiza la idoneidad, responsabilidad y ética del traductor ante el Estado y sus clientes.</p>
+            <p lang="en">A registered sworn translator is a professional authorised by the Poder Judicial de la Nación Argentina to confer the status of Public Faith upon their translations. This authorisation means their translations carry legal value equivalent to the original document before judicial, notarial, and governmental bodies. Registration is the professional oversight mechanism that guarantees the competence, accountability, and ethics of the translator before the State and their clients.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Qué validez legal tiene la traducción juramentada?</span>
+            <span lang="en">What legal validity does a sworn translation carry?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">La traducción juramentada posee Fe Pública en virtud de la matrícula profesional del traductor ante el Poder Judicial. Esto le confiere plena validez ante organismos judiciales, notariales, registrales y gubernamentales de la República Argentina. En el ámbito internacional, su aceptación depende de los convenios bilaterales o multilaterales vigentes y de los requisitos del organismo receptor en el país de destino.</p>
+            <p lang="en">A sworn translation carries Public Faith by virtue of the translator's professional registration with the Poder Judicial. This confers full validity before judicial, notarial, registry, and governmental bodies of the Argentine Republic. Internationally, its acceptance depends on applicable bilateral or multilateral conventions and on the requirements of the receiving body in the destination country.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Las traducciones son aceptadas en el extranjero?</span>
+            <span lang="en">Are translations accepted abroad?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">En la mayoría de los casos, sí. Argentina es signataria de la Convención de La Haya (Apostilla), lo que facilita la validación internacional de documentos. En muchos países, la traducción juramentada argentina es directamente aceptada, en ocasiones junto con la apostilla del documento original. Recomendamos consultar con el organismo receptor en el país de destino sobre sus requisitos específicos antes de encargar la traducción.</p>
+            <p lang="en">In most cases, yes. Argentina is a signatory of the Hague Convention (Apostille), which facilitates the international validation of documents. In many countries, Argentine sworn translations are directly accepted, sometimes alongside the apostille of the original document. We recommend consulting the receiving body in the destination country regarding their specific requirements prior to commissioning the translation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Cuál es el plazo de entrega habitual?</span>
+            <span lang="en">What is the usual delivery timeframe?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">El plazo de entrega varía según la extensión, complejidad terminológica y formato del documento. Para documentos de extensión estándar (hasta 5 páginas), el plazo habitual es de 2 a 5 días hábiles. Para volúmenes mayores o documentación de alta especialización técnica, se conviene un plazo específico al momento de la cotización. Existe la posibilidad de gestión urgente sujeta a disponibilidad y a cargo adicional.</p>
+            <p lang="en">Delivery timeframes vary according to the length, terminological complexity, and format of the document. For standard-length documents (up to 5 pages), the usual timeframe is 2 to 5 business days. For larger volumes or highly specialised technical documentation, a specific timeframe is agreed upon at the quotation stage. Urgent processing is available subject to availability and an additional charge.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Cómo se envían los documentos?</span>
+            <span lang="en">How are documents submitted and delivered?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">Los documentos pueden enviarse en formato digital (PDF de alta resolución, escaneado) por correo electrónico o por WhatsApp. La traducción juramentada final se entrega en soporte digital con firma y sello del traductor público. En los casos en que el organismo receptor requiera ejemplar físico, se coordina el envío postal por medios acordados. No es necesario el envío del documento original en la mayoría de los casos.</p>
+            <p lang="en">Documents may be submitted in digital format (high-resolution PDF, scanned copy) via email or WhatsApp. The final sworn translation is delivered digitally with the sworn translator's signature and seal. In cases where the receiving body requires a physical copy, postal delivery is coordinated by agreed means. Submission of the original document is not required in most cases.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Las sesiones de mentoría son individuales?</span>
+            <span lang="en">Are the mentoring sessions individual?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">Sí. El programa de mentoría (VP-ME-004) contempla exclusivamente sesiones individuales en modalidad 1:1. Este formato garantiza que el enfoque, el ritmo y los contenidos de cada sesión respondan a las necesidades específicas del participante, sin ajustarse a un currículo grupal estandarizado. Las sesiones se realizan de manera remota a través de plataformas de videoconferencia.</p>
+            <p lang="en">Yes. The mentoring programme (VP-ME-004) is conducted exclusively through individual 1:1 sessions. This format ensures that the focus, pace, and content of each session respond to the specific needs of the participant, without conforming to a standardised group curriculum. Sessions are conducted remotely via videoconferencing platforms.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿El programa de mentoría contempla preparación para exámenes?</span>
+            <span lang="en">Does the mentoring programme include exam preparation?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">No. El programa de mentoría en inglés (VP-ME-004) no incluye preparación para exámenes estandarizados de nivel (IELTS, TOEFL, Cambridge, etc.) ni emite certificados de nivel al finalizar. Su orientación es estrictamente funcional y profesional: se trabajan situaciones concretas de desempeño en inglés que el participante enfrenta o anticipa en su vida laboral o personal. Para la preparación de exámenes certificados, recomendamos consultar la oferta de instituciones especializadas.</p>
+            <p lang="en">No. The English mentoring programme (VP-ME-004) does not include preparation for standardised level examinations (IELTS, TOEFL, Cambridge, etc.) nor does it issue level certificates upon completion. Its orientation is strictly functional and professional: sessions address concrete English performance situations that the participant faces or anticipates in their professional or personal life. For certified examination preparation, we recommend consulting the offerings of specialised institutions.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span lang="es">¿Cómo se solicita un presupuesto?</span>
+            <span lang="en">How does one request a quotation?</span>
+            <span class="faq-arrow">›</span>
+          </button>
+          <div class="faq-a">
+            <p lang="es">El presupuesto puede solicitarse a través de tres canales: (1) mediante el formulario de consulta formal disponible en esta página, en la sección "Consulta"; (2) por correo electrónico a verbapraxis@outlook.com, indicando el servicio requerido y adjuntando el documento o descripción de la necesidad; (3) directamente por WhatsApp al número +54 9 221 597-2410. Para traducciones, se solicita el envío del documento original a fin de efectuar la cotización con precisión.</p>
+            <p lang="en">A quotation may be requested through three channels: (1) via the formal enquiry form available on this page, in the "Enquiry" section; (2) by email to verbapraxis@outlook.com, indicating the required service and attaching the document or description of the need; (3) directly via WhatsApp at +54 9 221 597-2410. For translations, the submission of the original document is requested in order to provide an accurate quotation.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Inquiry Form -->
+    <section class="form-section" id="consulta">
+      <p class="section-label" lang="es">Formulario de Consulta</p>
+      <p class="section-label" lang="en">Enquiry Form</p>
+      <h2 class="section-title" lang="es">Consulta Formal</h2>
+      <h2 class="section-title" lang="en">Formal Enquiry</h2>
+      <div class="form-wrap">
+        <form id="inquiry-form" onsubmit="handleFormSubmit(event)" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="f-name" lang="es">Nombre completo</label>
+              <label for="f-name" lang="en">Full name</label>
+              <input type="text" id="f-name" name="name" required autocomplete="name" />
+            </div>
+            <div class="form-field">
+              <label for="f-email" lang="es">Correo electrónico</label>
+              <label for="f-email" lang="en">Email address</label>
+              <input type="email" id="f-email" name="email" required autocomplete="email" />
+            </div>
+            <div class="form-field full">
+              <label for="f-service" lang="es">Servicio de interés</label>
+              <label for="f-service" lang="en">Service of interest</label>
+              <select id="f-service" name="service" required>
+                <option value="" lang="es">— Seleccione un servicio —</option>
+                <option value="" lang="en">— Select a service —</option>
+                <option value="VP-TL-001" lang="es">VP-TL-001 · Traducción Legal Juramentada</option>
+                <option value="VP-TL-001" lang="en">VP-TL-001 · Legal Sworn Translation</option>
+                <option value="VP-TT-002" lang="es">VP-TT-002 · Traducción Técnica Juramentada</option>
+                <option value="VP-TT-002" lang="en">VP-TT-002 · Technical Sworn Translation</option>
+                <option value="VP-AV-003" lang="es">VP-AV-003 · Traducción Audiovisual</option>
+                <option value="VP-AV-003" lang="en">VP-AV-003 · Audiovisual Translation</option>
+                <option value="VP-ME-004" lang="es">VP-ME-004 · Mentoría en Inglés</option>
+                <option value="VP-ME-004" lang="en">VP-ME-004 · English Mentoring Programme</option>
+                <option value="VP-EA-005" lang="es">VP-EA-005 · Asesoría en Inglés</option>
+                <option value="VP-EA-005" lang="en">VP-EA-005 · English Advisory</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="f-message" lang="es">Descripción de la consulta</label>
+              <label for="f-message" lang="en">Description of the enquiry</label>
+              <textarea id="f-message" name="message" required placeholder=""></textarea>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">
+            <span lang="es">Enviar consulta</span>
+            <span lang="en">Submit enquiry</span>
+          </button>
+        </form>
+        <div class="form-success" id="form-success">
+          <p lang="es"><strong>Consulta recibida.</strong> Nos comunicaremos a la brevedad al correo indicado. Tiempo de respuesta habitual: 1 a 2 días hábiles.</p>
+          <p lang="en"><strong>Enquiry received.</strong> We will be in contact shortly at the email address provided. Usual response time: 1 to 2 business days.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Sidebar ─────────────────────────────────────────────── -->
+  <aside id="sidebar">
+
+    <!-- CTA Card -->
+    <div class="sidebar-card highlight">
+      <h3 lang="es">Sesión de Diagnóstico</h3>
+      <h3 lang="en">Diagnostic Session</h3>
+      <p lang="es">Coordiná una consulta inicial sin compromiso para evaluar tus necesidades de traducción o formación en inglés.</p>
+      <p lang="en">Arrange an initial consultation without commitment to assess your translation or English formation needs.</p>
+      <a href="https://wa.me/5492215972410" class="cta-white" target="_blank" rel="noopener">
+        <span lang="es">Contactar por WhatsApp →</span>
+        <span lang="en">Contact via WhatsApp →</span>
+      </a>
+    </div>
+
+    <!-- About -->
+    <div class="sidebar-card" id="sobre-nosotros-sidebar">
+      <h3 lang="es">Sobre la Organización</h3>
+      <h3 lang="en">About the Organisation</h3>
+      <p lang="es">Verba Praxis es una red de traductores públicos matriculados ante el Poder Judicial de la Nación Argentina. Desde 2026, ofrecemos servicios de traducción certificada y formación en inglés para organizaciones y profesionales en Argentina y el mundo.</p>
+      <p lang="en">Verba Praxis is a network of sworn translators registered with the Poder Judicial de la Nación Argentina. Since 2026, we have offered certified translation services and English formation for organisations and professionals in Argentina and abroad.</p>
+      <p lang="es">Nuestro trabajo se rige por los principios de precisión terminológica, fidelidad al texto original y responsabilidad profesional hacia el cliente.</p>
+      <p lang="en">Our work is governed by the principles of terminological precision, fidelity to the source text, and professional accountability to the client.</p>
+      <hr class="sidebar-divider">
+      <div class="creds-block">
+        <p lang="es"><strong>Matrícula:</strong> Poder Judicial de la Nación Argentina</p>
+        <p lang="en"><strong>Registration:</strong> Poder Judicial de la Nación Argentina</p>
+        <p lang="es"><strong>Fe Pública:</strong> Válida ante organismos judiciales, notariales y gubernamentales</p>
+        <p lang="en"><strong>Public Faith:</strong> Valid before judicial, notarial, and governmental bodies</p>
+      </div>
+    </div>
+
+    <!-- Language Programme -->
+    <div class="sidebar-card" id="idiomas">
+      <h3 lang="es">Programa de Idiomas</h3>
+      <h3 lang="en">Language Programme</h3>
+      <p lang="es">El programa de formación en inglés de Verba Praxis está orientado exclusivamente al desempeño profesional. No contempla preparación para exámenes estandarizados. Incluye los servicios VP-ME-004 (Mentoría) y VP-EA-005 (Asesoría).</p>
+      <p lang="en">The Verba Praxis English formation programme is oriented exclusively toward professional performance. It does not include preparation for standardised examinations. It comprises services VP-ME-004 (Mentoring) and VP-EA-005 (Advisory).</p>
+    </div>
+
+    <!-- Related Services -->
+    <div class="sidebar-card">
+      <h3 lang="es">Servicios Relacionados</h3>
+      <h3 lang="en">Related Services</h3>
+      <ul class="related-list">
+        <li>
+          <span class="doi-ref">VP-TL-001</span>
+          <a href="#vp-tl-001">
+            <span lang="es">Traducción Legal Juramentada</span>
+            <span lang="en">Legal Sworn Translation</span>
+          </a>
+        </li>
+        <li>
+          <span class="doi-ref">VP-TT-002</span>
+          <a href="#vp-tt-002">
+            <span lang="es">Traducción Técnica Juramentada</span>
+            <span lang="en">Technical Sworn Translation</span>
+          </a>
+        </li>
+        <li>
+          <span class="doi-ref">VP-AV-003</span>
+          <a href="#vp-av-003">
+            <span lang="es">Traducción Audiovisual</span>
+            <span lang="en">Audiovisual Translation</span>
+          </a>
+        </li>
+        <li>
+          <span class="doi-ref">VP-ME-004</span>
+          <a href="#vp-me-004">
+            <span lang="es">Mentoría en Inglés</span>
+            <span lang="en">English Mentoring</span>
+          </a>
+        </li>
+        <li>
+          <span class="doi-ref">VP-EA-005</span>
+          <a href="#vp-ea-005">
+            <span lang="es">Asesoría en Inglés</span>
+            <span lang="en">English Advisory</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Direct Contact -->
+    <div class="sidebar-card">
+      <h3 lang="es">Contacto Directo</h3>
+      <h3 lang="en">Direct Contact</h3>
+      <div class="contact-block">
+        <div class="contact-item">
+          <span class="icon-wrap icon-wa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </span>
+          <a href="https://wa.me/5492215972410" target="_blank" rel="noopener">+54 9 221 597-2410</a>
+        </div>
+        <div class="contact-item">
+          <span class="icon-wrap icon-em">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          </span>
+          <a href="mailto:verbapraxis@outlook.com">verbapraxis@outlook.com</a>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer id="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-name">VERBA PRAXIS</div>
+    <div lang="es">Servicios de Traducción e Idiomas · Est. MMXXVI · Argentina</div>
+    <div lang="en">Translation and Language Services · Est. MMXXVI · Argentina</div>
+    <div>
+      <a href="mailto:verbapraxis@outlook.com">verbapraxis@outlook.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://wa.me/5492215972410" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Locale Toggle ─────────────────────────────────────────── */
+  function setLocale(locale) {
+    document.documentElement.setAttribute('data-locale', locale);
+    document.getElementById('btn-es').classList.toggle('active', locale === 'es');
+    document.getElementById('btn-en').classList.toggle('active', locale === 'en');
+    document.getElementById('btn-es').setAttribute('aria-pressed', locale === 'es');
+    document.getElementById('btn-en').setAttribute('aria-pressed', locale === 'en');
+  }
+
+  /* ── FAQ Accordion ─────────────────────────────────────────── */
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var wasOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(function(el) {
+      el.classList.remove('open');
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+    }
+  }
+
+  /* ── Form Submit ───────────────────────────────────────────── */
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    var form = document.getElementById('inquiry-form');
+    var success = document.getElementById('form-success');
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

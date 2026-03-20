@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verba Praxis — Traducciones & Inglés que funcionan</title>
+  <!-- Fontshare CDN -->
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=satoshi@400,500,700&display=swap" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --warm:    #FFFBF0;
+      --text:    #1A1A1A;
+      --text-mid:#3D3D3D;
+      --text-muted:#7A7A7A;
+      --orange:  #FF6B35;
+      --orange-lt:#FFE5D9;
+      --orange-md:#FFBFA0;
+      --border:  #E8E0D0;
+      --white:   #FFFFFF;
+      --card-bg: #FFF8F2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Satoshi', system-ui, sans-serif;
+      background: var(--warm);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Cabinet Grotesk', system-ui, sans-serif; line-height: 1.1; }
+
+    /* ─── Nav ─── */
+    .nav {
+      padding: 0 48px;
+      background: var(--warm);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+    }
+
+    .logo {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Squiggly underline via SVG */
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='4'%3E%3Cpath d='M0 2 Q7.5 0 15 2 Q22.5 4 30 2 Q37.5 0 45 2 Q52.5 4 60 2' fill='none' stroke='%23FF6B35' stroke-width='2'/%3E%3C/svg%3E") repeat-x;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 8px 14px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-wa {
+      background: var(--orange);
+      color: var(--white) !important;
+      font-weight: 700 !important;
+      padding: 9px 20px !important;
+      border-radius: 100px;
+      transition: background 0.2s !important;
+    }
+    .nav-wa:hover { background: #e55a26 !important; }
+
+    .lang-btn {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: none;
+      border: 1.5px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding: 80px 48px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange-lt);
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.6; }
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-mid);
+      margin-bottom: 36px;
+      max-width: 520px;
+      line-height: 1.65;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 15px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #e55a26; transform: scale(1.02); }
+
+    .btn-secondary {
+      display: inline-block;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 24px;
+      text-decoration: none;
+      border: 2px solid var(--border);
+      border-radius: 100px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* Hero side cards */
+    .hero-side { display: flex; flex-direction: column; gap: 16px; }
+
+    .hero-stat-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+    }
+
+    .hero-stat-num {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--orange);
+      display: block;
+      line-height: 1;
+    }
+
+    .hero-stat-label { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+
+    .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .lang-pill {
+      background: var(--orange-lt);
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    /* Floating badge */
+    .floating-badge {
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 100px;
+      display: inline-block;
+      box-shadow: 0 4px 20px rgba(255,107,53,0.35);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* ─── Services ("I help with") ─── */
+    .services-section { padding: 72px 48px; background: var(--white); }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-lead {
+      font-size: 17px;
+      color: var(--text-mid);
+      max-width: 600px;
+      margin-bottom: 52px;
+      line-height: 1.7;
+    }
+
+    .services-list { display: flex; flex-direction: column; gap: 0; }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0;
+      border-bottom: 1.5px solid var(--border);
+      padding: 32px 0;
+      transition: background 0.2s;
+    }
+    .service-item:first-child { border-top: 1.5px solid var(--border); }
+
+    .service-item-num {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+      padding-top: 4px;
+    }
+
+    .service-item-content {}
+
+    .service-item-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .service-item-desc {
+      font-size: 15px;
+      color: var(--text-mid);
+      max-width: 680px;
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .service-tag {
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--orange-lt);
+      color: var(--orange);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    /* ─── Real Talk ─── */
+    .realtalk-section { padding: 72px 48px; background: var(--text); }
+
+    .realtalk-inner { max-width: 1100px; margin: 0 auto; }
+
+    .realtalk-eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .realtalk-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .realtalk-body {
+      font-size: 17px;
+      color: rgba(255,255,255,0.72);
+      max-width: 680px;
+      margin-bottom: 20px;
+      line-height: 1.75;
+    }
+
+    .realtalk-highlight {
+      background: rgba(255,107,53,0.12);
+      border-left: 4px solid var(--orange);
+      padding: 16px 22px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      margin: 28px 0;
+      line-height: 1.7;
+    }
+
+    /* ─── Who I work with ─── */
+    .clients-section { padding: 72px 48px; }
+
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 0;
+    }
+
+    .client-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 26px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .client-card:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(255,107,53,0.1); }
+
+    .client-card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+
+    .client-card-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .client-card-body { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+
+    /* ─── Process ─── */
+    .process-section { padding: 72px 48px; background: var(--orange); }
+
+    .process-inner { max-width: 1100px; margin: 0 auto; }
+
+    .process-eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .process-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 48px;
+      letter-spacing: -0.02em;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .process-step {
+      background: rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+
+    .process-step-num {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.25);
+      display: block;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .process-step-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .process-step-body { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.65; }
+
+    /* ─── Mentoring deep-dive ─── */
+    .mentor-section { padding: 72px 48px; background: var(--card-bg); }
+
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .mentor-desc {
+      font-size: 17px;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+      line-height: 1.75;
+    }
+
+    .mentor-features { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+
+    .mentor-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .mentor-feature-icon {
+      width: 36px; height: 36px;
+      background: var(--orange-lt);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .mentor-feature-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .mentor-feature-body { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+    /* ─── Testimonials ─── */
+    .testimonials-section { padding: 72px 48px; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .testimonial-bubble {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 26px;
+      position: relative;
+    }
+
+    .testimonial-bubble::before {
+      content: '"';
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--orange-lt);
+      position: absolute;
+      top: 12px; left: 20px;
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-top: 32px;
+      margin-bottom: 18px;
+    }
+
+    .testimonial-author {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .testimonial-role { font-size: 13px; color: var(--text-muted); }
+
+    /* ─── FAQ ─── */
+    .faq-section { padding: 72px 48px; background: var(--white); }
+
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+
+    .faq-item {
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .faq-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 22px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+    }
+
+    .faq-q {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .faq-icon {
+      width: 30px; height: 30px;
+      background: var(--orange-lt);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--orange);
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      margin-top: 2px;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    .faq-a {
+      font-size: 15px;
+      color: var(--text-mid);
+      padding-bottom: 22px;
+      line-height: 1.75;
+      max-width: 720px;
+    }
+
+    /* ─── About ─── */
+    .about-section { padding: 72px 48px; }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .about-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .about-body {
+      font-size: 16px;
+      color: var(--text-mid);
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .about-stat-box {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 18px;
+    }
+
+    .about-stat-num {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--orange);
+      display: block;
+      line-height: 1;
+    }
+
+    .about-stat-label { font-size: 13px; color: var(--text-mid); margin-top: 4px; }
+
+    /* ─── Contact ─── */
+    .contact-section { padding: 72px 48px; background: var(--text); }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .contact-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-body {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .contact-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: var(--white);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 24px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin-bottom: 28px;
+    }
+    .contact-wa:hover { background: #1dba58; }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .contact-detail:last-child { border-bottom: none; }
+    .contact-detail-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+    .contact-detail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; }
+    .contact-detail-val { font-size: 14px; color: var(--white); text-decoration: none; }
+    .contact-detail-val:hover { color: var(--orange); }
+
+    /* Form */
+    .form-group { margin-bottom: 18px; }
+    .form-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); display: block; margin-bottom: 8px; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.14);
+      color: var(--white);
+      font-family: 'Satoshi', sans-serif;
+      font-size: 15px;
+      padding: 13px 16px;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--orange); }
+    .form-textarea { height: 120px; resize: vertical; }
+    .form-select option { background: var(--text); }
+    .form-submit {
+      width: 100%;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 15px;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: #e55a26; transform: scale(1.01); }
+    .success-msg {
+      display: none;
+      background: rgba(255,107,53,0.15);
+      border: 1.5px solid rgba(255,107,53,0.4);
+      padding: 16px 20px;
+      font-size: 15px;
+      color: var(--white);
+      margin-top: 14px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #111;
+      padding: 52px 48px 28px;
+      color: rgba(255,255,255,0.38);
+      font-size: 13px;
+    }
+
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .footer-desc { font-size: 13px; line-height: 1.7; }
+
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .nav, .hero, .services-section, .realtalk-section, .clients-section, .process-section, .mentor-section, .testimonials-section, .faq-section, .about-section, .contact-section, footer { padding-left: 24px; padding-right: 24px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-side { display: none; }
+      .clients-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .mentor-grid { grid-template-columns: 1fr; gap: 36px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 36px; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .about-stats { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      nav .nav-links a[data-hide] { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Verba Praxis</a>
+    <div class="nav-links">
+      <a href="#servicios" data-i18n="nav_services" data-hide>Servicios</a>
+      <a href="#mentoring" data-i18n="nav_mentor" data-hide>Mentoría</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="https://wa.me/5492215972410" class="nav-wa" data-i18n="nav_wa">WhatsApp</a>
+      <button class="lang-btn" id="langToggle">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span data-i18n="hero_badge">Abierto para nuevos clientes</span>
+      </div>
+      <h1 data-i18n="hero_h1_html">Tus documentos,<br>tu inglés.<br><span>Sin vueltas.</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Traductora Pública Matriculada + Mentora en inglés. Trabajo con empresas, abogados, estudiantes y personas que necesitan que el idioma no sea un problema.</p>
+      <div class="hero-ctas">
+        <a href="https://wa.me/5492215972410" class="btn-primary" data-i18n="hero_cta1">Escribime por WhatsApp</a>
+        <a href="#servicios" class="btn-secondary" data-i18n="hero_cta2">¿Qué hacemos?</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div style="display:flex; justify-content:center;">
+        <div class="floating-badge" data-i18n="floating_badge">✓ Validez legal garantizada</div>
+      </div>
+      <div class="hero-stat-card">
+        <span class="hero-stat-num">24 hs</span>
+        <div class="hero-stat-label" data-i18n="hstat1">Entrega estándar de documentos</div>
+      </div>
+      <div class="hero-stat-card">
+        <span class="hero-stat-num">+500</span>
+        <div class="hero-stat-label" data-i18n="hstat2">Clientes atendidos</div>
+      </div>
+      <div class="hero-stat-card">
+        <div style="margin-bottom:12px; font-size:13px; font-weight:600; color:var(--text-muted)" data-i18n="hstat3_label">Idiomas</div>
+        <div class="lang-pills">
+          <span class="lang-pill">🇦🇷 Español</span>
+          <span class="lang-pill">🇬🇧 English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services-section" id="servicios">
+  <div class="section-inner">
+    <span class="section-eyebrow" data-i18n="svc_eyebrow">Lo que hacemos</span>
+    <h2 class="section-title" data-i18n="svc_title">Con esto te ayudo</h2>
+    <p class="section-lead" data-i18n="svc_lead">Sin tecnicismos. Sin rodeos. Estas son las cinco cosas concretas que podemos resolver juntos.</p>
+    <div class="services-list" id="servicesList"></div>
+  </div>
+</section>
+
+<!-- Real Talk -->
+<section class="realtalk-section">
+  <div class="realtalk-inner">
+    <span class="realtalk-eyebrow" data-i18n="rt_eyebrow">Real talk</span>
+    <h2 class="realtalk-title" data-i18n="rt_title">Por qué importa que tu traducción tenga sello y firma</h2>
+    <p class="realtalk-body" data-i18n="rt_body1">Mucha gente llega con documentos "traducidos" que encontró online, o que le hizo un amigo bilingüe. El problema es que eso no sirve. Un tribunal, una embajada, la UIF o cualquier organismo oficial no acepta una traducción sin la firma y el sello de un Traductor Público Matriculado. Punto.</p>
+    <div class="realtalk-highlight" data-i18n="rt_highlight">Si presentás una traducción sin certificación oficial ante un juez o ante una embajada, la van a rechazar. No importa lo bien que esté escrita. No importa que el bilingüe sea muy bueno. La validez jurídica sólo la da el Traductor Público.</div>
+    <p class="realtalk-body" data-i18n="rt_body2">Trabajé con clientes que perdieron semanas de trámite porque presentaron una traducción "libre" en vez de una jurada. Un pasaporte retenido, una adopción demorada, un contrato impugnado. El costo de hacer las cosas mal es siempre mayor que el de hacerlas bien desde el principio.</p>
+    <p class="realtalk-body" data-i18n="rt_body3">Por eso en Verba Praxis cada traducción que sale tiene firma, sello y responsabilidad profesional detrás. No porque lo exija la burocracia (aunque también) sino porque eso es lo que te protege a vos.</p>
+  </div>
+</section>
+
+<!-- Who I work with -->
+<section class="clients-section">
+  <div class="section-inner">
+    <span class="section-eyebrow" data-i18n="clients_eyebrow">Para quién trabajo</span>
+    <h2 class="section-title" data-i18n="clients_title">¿Sos de los míos?</h2>
+    <p class="section-lead" data-i18n="clients_lead">Trabajo con todo tipo de personas. Acá van los perfiles con los que trabajo más seguido:</p>
+    <div class="clients-grid" id="clientsGrid"></div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="process-section">
+  <div class="process-inner">
+    <span class="process-eyebrow" data-i18n="proc_eyebrow">El proceso</span>
+    <h2 class="process-title" data-i18n="proc_title">Tan fácil como 1, 2, 3</h2>
+    <div class="process-steps" id="processSteps"></div>
+  </div>
+</section>
+
+<!-- Mentoring deep-dive -->
+<section class="mentor-section" id="mentoring">
+  <div class="section-inner">
+    <span class="section-eyebrow" data-i18n="mentor_eyebrow">Mentoría en inglés</span>
+    <div class="mentor-grid">
+      <div>
+        <h2 class="section-title" data-i18n="mentor_title">Inglés que sirve,<br>no que se estudia</h2>
+        <p class="mentor-desc" data-i18n="mentor_desc1">La mentoría en inglés que ofrezco no es un curso. No hay examen, no hay libreta, no hay "nivel A2 o B1". Es trabajo real, orientado a lo que vos necesitás resolver: hablar mejor en reuniones con clientes extranjeros, no trabarte en una entrevista de trabajo, escribir emails que suenen profesionales y no como Google Translate.</p>
+        <p class="mentor-desc" data-i18n="mentor_desc2">Cada programa empieza con una sesión diagnóstica gratuita de 30 minutos. Hablamos, te escucho, entiendo tu situación, y de ahí diseñamos juntos el camino. Sin materiales genéricos, sin clases magistrales. Un profesional bilingüe que sabe del mundo real, trabajando con vos.</p>
+      </div>
+      <div>
+        <ul class="mentor-features" id="mentorFeatures"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+  <div class="section-inner">
+    <span class="section-eyebrow" data-i18n="testi_eyebrow">Lo que dicen</span>
+    <h2 class="section-title" data-i18n="testi_title">Personas reales, resultados reales</h2>
+    <p class="section-lead" data-i18n="testi_lead">No somos perfectos, pero sí consistentes. Esto nos dijeron algunos de nuestros clientes:</p>
+    <div class="testimonials-grid" id="testimonialsGrid"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-inner">
+    <span class="section-eyebrow" data-i18n="faq_eyebrow">Preguntas frecuentes</span>
+    <h2 class="section-title" data-i18n="faq_title">Te respondo todo</h2>
+    <p class="section-lead" data-i18n="faq_lead">Las dudas más comunes antes de empezar, respondidas sin rodeos:</p>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about-section" id="nosotros">
+  <div class="about-inner">
+    <div>
+      <span class="section-eyebrow" data-i18n="about_eyebrow">Quiénes somos</span>
+      <h2 class="about-title" data-i18n="about_title">Un equipo chico con trabajo serio</h2>
+      <p class="about-body" data-i18n="about_body1">Verba Praxis no es una agencia de traducción masiva. Somos una red pequeña de Traductores Públicos Matriculados y profesionales bilingües con base en Argentina que decidimos trabajar diferente: con cuidado, con responsabilidad, con la misma dedicación para un contrato corporativo que para el pasaporte de una persona que se va a vivir afuera.</p>
+      <p class="about-body" data-i18n="about_body2">Operamos 100% online, lo que nos permite atender a personas y empresas en todo el país y en el exterior. Respondemos rápido porque respetamos tu tiempo. Y garantizamos la calidad porque nuestra firma profesional está en juego en cada documento.</p>
+      <p class="about-body" data-i18n="about_body3">Si trabajás con nosotros, sabés que hay una persona real, con nombre y matrícula, responsable del trabajo. No un algoritmo. No una plataforma anónima. Una profesional que puede firmarte y sellarte el documento, y que se hace cargo.</p>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat-box">
+        <span class="about-stat-num">+500</span>
+        <span class="about-stat-label" data-i18n="astat1">Clientes atendidos</span>
+      </div>
+      <div class="about-stat-box">
+        <span class="about-stat-num">24 hs</span>
+        <span class="about-stat-label" data-i18n="astat2">Entrega estándar</span>
+      </div>
+      <div class="about-stat-box">
+        <span class="about-stat-num">100%</span>
+        <span class="about-stat-label" data-i18n="astat3">Digital y remoto</span>
+      </div>
+      <div class="about-stat-box">
+        <span class="about-stat-num">NDA</span>
+        <span class="about-stat-label" data-i18n="astat4">Confidencialidad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contacto">
+  <div class="contact-inner">
+    <div>
+      <span class="contact-eyebrow" data-i18n="contact_eyebrow">Hablemos</span>
+      <h2 class="contact-title" data-i18n="contact_title">¿Cómo te puedo ayudar?</h2>
+      <p class="contact-body" data-i18n="contact_body">Mandame un mensaje por WhatsApp o usá el formulario. Te respondo en menos de 2 horas (en horario hábil) con el presupuesto y el plazo exacto. Sin sorpresas.</p>
+      <a href="https://wa.me/5492215972410" class="contact-wa">
+        <span>💬</span>
+        <span data-i18n="contact_wa_btn">Escribime por WhatsApp</span>
+      </a>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">✉</span>
+        <div>
+          <span class="contact-detail-label" data-i18n="cd_email">Email</span>
+          <a href="mailto:verbapraxis@outlook.com" class="contact-detail-val">verbapraxis@outlook.com</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">⏱</span>
+        <div>
+          <span class="contact-detail-label" data-i18n="cd_response">Respuesta</span>
+          <span class="contact-detail-val" data-i18n="cd_response_val">Menos de 2 horas en días hábiles</span>
+        </div>
+      </div>
+    </div>
+    <form id="contactForm">
+      <div class="form-group">
+        <label class="form-label" data-i18n="form_name">Tu nombre</label>
+        <input type="text" class="form-input" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="form_email">Tu email</label>
+        <input type="email" class="form-input" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="form_service">¿Qué necesitás?</label>
+        <select class="form-select form-input">
+          <option data-i18n="opt_legal">Traducción Legal / Jurada</option>
+          <option data-i18n="opt_tech">Traducción Técnica</option>
+          <option data-i18n="opt_av">Traducción Audiovisual</option>
+          <option data-i18n="opt_mentor">Mentoría en Inglés</option>
+          <option data-i18n="opt_advisory">English Advisory</option>
+          <option data-i18n="opt_other">No sé bien / consulta general</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="form_msg">Contame más</label>
+        <textarea class="form-textarea" required></textarea>
+      </div>
+      <button type="submit" class="form-submit" data-i18n="form_submit">Mandar mensaje</button>
+      <div class="success-msg" id="successMsg" data-i18n="form_success">¡Listo! Te respondo a la brevedad.</div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Verba Praxis</div>
+        <p class="footer-desc" data-i18n="footer_desc">Traducciones con validez legal y mentoría en inglés. Con base en Argentina, para todo el mundo. Traductores Públicos Matriculados.</p>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="footer_services">Servicios</div>
+        <ul class="footer-links">
+          <li><a href="#servicios" data-i18n="footer_legal">Traducción Legal</a></li>
+          <li><a href="#servicios" data-i18n="footer_tech">Traducción Técnica</a></li>
+          <li><a href="#servicios" data-i18n="footer_av">Traducción Audiovisual</a></li>
+          <li><a href="#mentoring" data-i18n="footer_mentor">Mentoría en Inglés</a></li>
+          <li><a href="#servicios" data-i18n="footer_advisory">English Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="footer_about_col">Nosotros</div>
+        <ul class="footer-links">
+          <li><a href="#nosotros" data-i18n="footer_about_link">Quiénes somos</a></li>
+          <li><a href="#faq" data-i18n="footer_faq">FAQ</a></li>
+          <li><a href="#contacto" data-i18n="footer_contact_link">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="footer_contact">Contacto</div>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/5492215972410">WhatsApp +54 9 221 597-2410</a></li>
+          <li><a href="mailto:verbapraxis@outlook.com">verbapraxis@outlook.com</a></li>
+          <li><span data-i18n="footer_worldwide">Argentina · Todo el mundo</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Verba Praxis — <span data-i18n="footer_rights">Todos los derechos reservados</span></span>
+      <span data-i18n="footer_tag">Traductores Públicos Matriculados · Argentina</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const locale = {
+  es: {
+    nav_services:"Servicios", nav_mentor:"Mentoría", nav_faq:"FAQ", nav_wa:"WhatsApp",
+    hero_badge:"Abierto para nuevos clientes",
+    hero_h1_html:'Tus documentos,<br>tu inglés.<br><span>Sin vueltas.</span>',
+    hero_sub:"Traductora Pública Matriculada + Mentora en inglés. Trabajo con empresas, abogados, estudiantes y personas que necesitan que el idioma no sea un problema.",
+    hero_cta1:"Escribime por WhatsApp", hero_cta2:"¿Qué hacemos?",
+    floating_badge:"✓ Validez legal garantizada",
+    hstat1:"Entrega estándar de documentos", hstat2:"Clientes atendidos", hstat3_label:"Idiomas",
+    svc_eyebrow:"Lo que hacemos", svc_title:"Con esto te ayudo",
+    svc_lead:"Sin tecnicismos. Sin rodeos. Estas son las cinco cosas concretas que podemos resolver juntos.",
+    rt_eyebrow:"Real talk", rt_title:"Por qué importa que tu traducción tenga sello y firma",
+    rt_body1:"Mucha gente llega con documentos \"traducidos\" que encontró online, o que le hizo un amigo bilingüe. El problema es que eso no sirve. Un tribunal, una embajada, la UIF o cualquier organismo oficial no acepta una traducción sin la firma y el sello de un Traductor Público Matriculado. Punto.",
+    rt_highlight:"Si presentás una traducción sin certificación oficial ante un juez o ante una embajada, la van a rechazar. No importa lo bien que esté escrita. No importa que el bilingüe sea muy bueno. La validez jurídica sólo la da el Traductor Público.",
+    rt_body2:"Trabajé con clientes que perdieron semanas de trámite porque presentaron una traducción \"libre\" en vez de una jurada. Un pasaporte retenido, una adopción demorada, un contrato impugnado. El costo de hacer las cosas mal es siempre mayor que el de hacerlas bien desde el principio.",
+    rt_body3:"Por eso en Verba Praxis cada traducción que sale tiene firma, sello y responsabilidad profesional detrás. No porque lo exija la burocracia (aunque también) sino porque eso es lo que te protege a vos.",
+    clients_eyebrow:"Para quién trabajo", clients_title:"¿Sos de los míos?",
+    clients_lead:"Trabajo con todo tipo de personas. Acá van los perfiles con los que trabajo más seguido:",
+    proc_eyebrow:"El proceso", proc_title:"Tan fácil como 1, 2, 3",
+    mentor_eyebrow:"Mentoría en inglés", mentor_title:"Inglés que sirve,<br>no que se estudia",
+    mentor_desc1:"La mentoría en inglés que ofrezco no es un curso. No hay examen, no hay libreta, no hay \"nivel A2 o B1\". Es trabajo real, orientado a lo que vos necesitás resolver: hablar mejor en reuniones con clientes extranjeros, no trabarte en una entrevista de trabajo, escribir emails que suenen profesionales y no como Google Translate.",
+    mentor_desc2:"Cada programa empieza con una sesión diagnóstica gratuita de 30 minutos. Hablamos, te escucho, entiendo tu situación, y de ahí diseñamos juntos el camino. Sin materiales genéricos, sin clases magistrales. Un profesional bilingüe que sabe del mundo real, trabajando con vos.",
+    testi_eyebrow:"Lo que dicen", testi_title:"Personas reales, resultados reales",
+    testi_lead:"No somos perfectos, pero sí consistentes. Esto nos dijeron algunos de nuestros clientes:",
+    faq_eyebrow:"Preguntas frecuentes", faq_title:"Te respondo todo",
+    faq_lead:"Las dudas más comunes antes de empezar, respondidas sin rodeos:",
+    about_eyebrow:"Quiénes somos", about_title:"Un equipo chico con trabajo serio",
+    about_body1:"Verba Praxis no es una agencia de traducción masiva. Somos una red pequeña de Traductores Públicos Matriculados y profesionales bilingües con base en Argentina que decidimos trabajar diferente: con cuidado, con responsabilidad, con la misma dedicación para un contrato corporativo que para el pasaporte de una persona que se va a vivir afuera.",
+    about_body2:"Operamos 100% online, lo que nos permite atender a personas y empresas en todo el país y en el exterior. Respondemos rápido porque respetamos tu tiempo. Y garantizamos la calidad porque nuestra firma profesional está en juego en cada documento.",
+    about_body3:"Si trabajás con nosotros, sabés que hay una persona real, con nombre y matrícula, responsable del trabajo. No un algoritmo. No una plataforma anónima. Una profesional que puede firmarte y sellarte el documento, y que se hace cargo.",
+    astat1:"Clientes atendidos", astat2:"Entrega estándar", astat3:"Digital y remoto", astat4:"Confidencialidad",
+    contact_eyebrow:"Hablemos", contact_title:"¿Cómo te puedo ayudar?",
+    contact_body:"Mandame un mensaje por WhatsApp o usá el formulario. Te respondo en menos de 2 horas (en horario hábil) con el presupuesto y el plazo exacto. Sin sorpresas.",
+    contact_wa_btn:"Escribime por WhatsApp",
+    cd_email:"Email", cd_response:"Respuesta", cd_response_val:"Menos de 2 horas en días hábiles",
+    form_name:"Tu nombre", form_email:"Tu email", form_service:"¿Qué necesitás?",
+    opt_legal:"Traducción Legal / Jurada", opt_tech:"Traducción Técnica", opt_av:"Traducción Audiovisual", opt_mentor:"Mentoría en Inglés", opt_advisory:"English Advisory", opt_other:"No sé bien / consulta general",
+    form_msg:"Contame más", form_submit:"Mandar mensaje",
+    form_success:"¡Listo! Te respondo a la brevedad.",
+    footer_desc:"Traducciones con validez legal y mentoría en inglés. Con base en Argentina, para todo el mundo. Traductores Públicos Matriculados.",
+    footer_services:"Servicios", footer_legal:"Traducción Legal", footer_tech:"Traducción Técnica", footer_av:"Traducción Audiovisual", footer_mentor:"Mentoría en Inglés", footer_advisory:"English Advisory",
+    footer_about_col:"Nosotros", footer_about_link:"Quiénes somos", footer_faq:"FAQ", footer_contact_link:"Contacto",
+    footer_contact:"Contacto", footer_worldwide:"Argentina · Todo el mundo",
+    footer_rights:"Todos los derechos reservados", footer_tag:"Traductores Públicos Matriculados · Argentina",
+    services: [
+      { num:"01", title:"Tus contratos traducidos y con validez legal", desc:"¿Tenés un contrato, un poder notarial, un estatuto societario o cualquier documento legal que necesita estar en inglés (o en español) con validez oficial? Eso es traducción jurada. La hago yo, la firmo y la sello, y sirve ante cualquier tribunal, registro o gobierno extranjero. No hay atajos acá.", tags:["Contratos", "Poderes notariales", "Estatutos", "Apostillas", "Partidas civiles", "Sentencias"] },
+      { num:"02", title:"Documentación técnica que se entiende", desc:"Manuales de uso, fichas de seguridad, especificaciones de ingeniería, normas ISO, informes técnicos. La documentación técnica mal traducida puede causar accidentes, multas y demandas. La traduzco con rigor terminológico y coherencia industrial para que los que la usen, la entiendan.", tags:["Manuales", "Fichas SDS", "Normas ISO", "Ingeniería", "Farmacéutica"] },
+      { num:"03", title:"Subtítulos y guiones para tu contenido", desc:"Tenés una serie, un documental, un curso online, un video corporativo y necesitás subtítulos o guión en el otro idioma. Lo hago respetando el ritmo, la naturalidad del habla y el contexto cultural. En formato SRT, VTT o el que necesites.", tags:["Subtítulos SRT/VTT", "Doblaje", "Streaming", "E-learning", "Corporativo"] },
+      { num:"04", title:"Inglés que sirve, no que se estudia", desc:"Mentorías individuales 1:1 para profesionales que necesitan mejorar su inglés en contextos específicos: entrevistas, reuniones, negociaciones, presentaciones. No es una clase de inglés. Es un trabajo orientado a resultados reales, con alguien que sabe de qué se trata el mundo de negocios.", tags:["1:1 online", "Negocios", "Entrevistas", "Presentaciones", "Pronunciación"] },
+      { num:"05", title:"Alguien que revisa tus emails en inglés", desc:"Escribís en inglés pero no estás 100% segura/o de que suene bien. El English Advisory es eso: te reviso los emails, propuestas, informes o cualquier comunicación antes de que la mandes. También hago soporte en tiempo real para reuniones o negociaciones importantes.", tags:["Revisión de emails", "Propuestas", "Informes", "Reuniones", "Negociaciones"] }
+    ],
+    clients: [
+      { icon:"👔", title:"Profesionales y directivos", body:"Abogados, contadores, ingenieros, gerentes que tienen que presentar documentos en el exterior o comunicarse en inglés en contextos de alto impacto. Gente que no tiene tiempo para errores." },
+      { icon:"✈", title:"Personas que se van al exterior", body:"Emigrantes, estudiantes que aplican a universidades extranjeras, personas que tramitan residencia o ciudadanía en otro país. Necesitan sus documentos de estado civil apostillados y traducidos." },
+      { icon:"🏢", title:"Empresas que trabajan con el exterior", body:"PyMEs exportadoras, startups con inversores extranjeros, empresas con proveedores internacionales. Necesitan contratos, manuales, compliance y comunicaciones en inglés que funcionen legalmente." },
+      { icon:"🎬", title:"Creadores y productoras de contenido", body:"Youtubers, productoras audiovisuales, plataformas de e-learning. Necesitan subtítulos, guiones y localización para llegar a audiencias en el otro idioma." }
+    ],
+    process: [
+      { num:"01", title:"Contame", body:"Escribime por WhatsApp o por el formulario. Contame qué necesitás: tipo de documento, idiomas, para qué es, cuándo lo necesitás. No hace falta que uses términos técnicos." },
+      { num:"02", title:"Presupuesto", body:"En menos de 2 horas hábiles te mando el precio final y la fecha de entrega. Sin sorpresas, sin letras chicas. Si te parece bien, lo confirmamos y arrancamos." },
+      { num:"03", title:"Listo", body:"Recibes tu traducción certificada en PDF por email en el plazo acordado. Con firma, con sello, lista para presentar donde necesites. Si algo no está bien, lo resolvemos." }
+    ],
+    mentorFeatures: [
+      { icon:"🎯", title:"Diagnóstico gratuito de 30 minutos", body:"Empezamos con una sesión sin cargo donde te escucho y entiendo exactamente qué necesitás mejorar." },
+      { icon:"📋", title:"Plan hecho a medida", body:"Sin cursos genéricos. Diseñamos juntos el programa según tus objetivos y tu disponibilidad horaria." },
+      { icon:"🎤", title:"Sesiones 1:1 de 60 minutos", body:"Por videollamada, semanales o bisemanales según tu ritmo. Con un profesional bilingüe que conoce el mundo real." },
+      { icon:"🚀", title:"Resultados en semanas, no en años", body:"No prometemos \"hablar perfecto\". Prometemos que en las próximas semanas vas a notar diferencia real en las situaciones que importan." }
+    ],
+    testimonials: [
+      { text:"Necesitaba traducir el estatuto de mi empresa para presentar ante inversores extranjeros. Lo tuve en 24 horas, perfectamente certificado. Me ahorré semanas de problema.", author:"Martín G.", role:"CEO, startup tecnológica" },
+      { text:"Estaba tramitando mi residencia en España y me faltaban varias partidas de nacimiento traducidas y apostilladas. Me asesoraron en todo el proceso. Clarísimo.", author:"Valeria R.", role:"Profesional, emigrante a España" },
+      { text:"Las sesiones de mentoría cambiaron completamente cómo me desenvuelvo en reuniones internacionales. Ya no me trabo. Sé cómo manejar el idioma en situaciones de presión.", author:"Federico L.", role:"Gerente de Operaciones" },
+      { text:"Tenía que presentar subtítulos en inglés para un festival de cine. Los entregaron antes del plazo, correctos al 100%. Una joya.", author:"Luciana M.", role:"Directora audiovisual" }
+    ],
+    faqs: [
+      { q:"¿Por qué necesito una traducción jurada y no alcanza con una traducción normal?", a:"Porque los organismos oficiales (tribunales, embajadas, notarías, universidades extranjeras) sólo aceptan traducciones firmadas y selladas por un Traductor Público Matriculado. Una traducción sin esa certificación simplemente no tiene validez legal, sin importar lo bien que esté escrita." },
+      { q:"¿Cuánto cuesta una traducción?", a:"Depende del tipo de documento, el volumen y la urgencia. Las traducciones juradas se calculan por página (250 palabras estándar). Mandame el documento por WhatsApp y en menos de 2 horas te doy el precio exacto, sin compromiso." },
+      { q:"¿Cuánto tarda?", a:"El plazo estándar es 24 a 48 horas para documentos de hasta 5 páginas. Si necesitás urgente (mismo día), hay un recargo del 50% y está sujeto a disponibilidad. Siempre te confirmo el plazo antes de arrancar." },
+      { q:"¿Puedo mandar el documento por WhatsApp o email?", a:"Sí, por eso somos 100% digitales. Mandá el PDF o foto del documento y te devuelvo la traducción en PDF certificado. Si necesitás el original con firma y sello en papel, lo coordinamos." },
+      { q:"¿Las traducciones sirven en el exterior?", a:"Sí. Las traducciones de Traductores Públicos Matriculados son reconocidas internacionalmente, especialmente cuando acompañan la apostilla del Convenio de La Haya. Si no sabés si tu documento necesita apostilla, te asesoro." },
+      { q:"¿Cómo son las sesiones de mentoría?", a:"Son individuales, por videollamada, de 60 minutos. Antes de empezar hacemos una sesión diagnóstica gratuita de 30 minutos para entender tus objetivos. La frecuencia es semanal o bisemanal según lo que acuerdemos. No es un curso: es trabajo con vos, para vos." },
+      { q:"¿Qué es el English Advisory exactamente?", a:"Es un servicio de revisión y mejora de textos en inglés que vos ya escribiste o que vas a enviar. Reviso emails, propuestas, informes, presentaciones. También hago soporte en tiempo real para reuniones importantes: te ayudo a prepararte o estoy disponible por chat durante la reunión." },
+      { q:"¿Qué pasa si tengo el documento en muy mal estado o en baja resolución?", a:"Si el original está deteriorado o en baja calidad, lo analizo y te digo si es posible traducirlo o si necesitás obtener una copia mejor del organismo emisor. Siempre soy honesta sobre qué se puede hacer y qué no." }
+    ]
+  },
+  en: {
+    nav_services:"Services", nav_mentor:"Mentoring", nav_faq:"FAQ", nav_wa:"WhatsApp",
+    hero_badge:"Open for new clients",
+    hero_h1_html:'Your documents,<br>your English.<br><span>No nonsense.</span>',
+    hero_sub:"Certified Public Translator + English Mentor. I work with companies, lawyers, students and anyone who needs language to stop being a problem.",
+    hero_cta1:"Message me on WhatsApp", hero_cta2:"What do we do?",
+    floating_badge:"✓ Legal validity guaranteed",
+    hstat1:"Standard document delivery", hstat2:"Clients served", hstat3_label:"Languages",
+    svc_eyebrow:"What we do", svc_title:"I can help you with",
+    svc_lead:"No jargon. No runaround. Here are the five concrete things we can solve together.",
+    rt_eyebrow:"Real talk", rt_title:"Why your translation needs a signature and official seal",
+    rt_body1:"A lot of people arrive with documents \"translated\" they found online, or that a bilingual friend did for them. The problem is that doesn't work. A court, an embassy, a financial regulator or any official body won't accept a translation without the signature and seal of a Certified Public Translator. Full stop.",
+    rt_highlight:"If you submit an uncertified translation to a judge or an embassy, they'll reject it. It doesn't matter how well-written it is. It doesn't matter how good the bilingual person is. Legal validity only comes from a Certified Public Translator.",
+    rt_body2:"I've worked with clients who lost weeks of paperwork time because they submitted a \"free\" translation instead of a certified one. A passport held up, an adoption delayed, a contract disputed. The cost of doing it wrong is always greater than doing it right from the start.",
+    rt_body3:"That's why every translation that leaves Verba Praxis has a professional signature, seal and accountability behind it. Not just because bureaucracy demands it — but because that's what actually protects you.",
+    clients_eyebrow:"Who I work with", clients_title:"Sound like you?",
+    clients_lead:"I work with all kinds of people. Here are the profiles I work with most often:",
+    proc_eyebrow:"The process", proc_title:"As easy as 1, 2, 3",
+    mentor_eyebrow:"English mentoring", mentor_title:"English that works,<br>not that you study",
+    mentor_desc1:"The English mentoring I offer is not a course. There's no exam, no textbook, no \"A2 or B1 level\". It's real work, focused on what you actually need to solve: speaking better in meetings with foreign clients, not freezing in a job interview, writing emails that sound professional and not like Google Translate.",
+    mentor_desc2:"Every program starts with a free 30-minute diagnostic session. We talk, I listen, I understand your situation, and from there we design the path together. No generic materials, no lectures. A bilingual professional who knows the real world, working with you.",
+    testi_eyebrow:"What people say", testi_title:"Real people, real results",
+    testi_lead:"We're not perfect, but we are consistent. Here's what some of our clients told us:",
+    faq_eyebrow:"FAQ", faq_title:"I'll answer everything",
+    faq_lead:"The most common questions before getting started, answered straight:",
+    about_eyebrow:"Who we are", about_title:"A small team doing serious work",
+    about_body1:"Verba Praxis is not a mass translation agency. We're a small network of Certified Public Translators and bilingual professionals based in Argentina who decided to work differently: with care, with responsibility, with the same dedication for a corporate contract as for the passport of someone moving abroad.",
+    about_body2:"We operate 100% online, which lets us serve people and companies anywhere in the country and internationally. We respond fast because we respect your time. And we guarantee quality because our professional signature is on every document.",
+    about_body3:"If you work with us, you know there's a real person, with a name and a professional license, responsible for the work. Not an algorithm. Not an anonymous platform. A professional who can sign and seal your document, and who stands behind it.",
+    astat1:"Clients served", astat2:"Standard delivery", astat3:"Digital & remote", astat4:"Confidentiality",
+    contact_eyebrow:"Let's talk", contact_title:"How can I help you?",
+    contact_body:"Send me a WhatsApp message or use the form. I'll respond in less than 2 hours (business hours) with the exact price and delivery time. No surprises.",
+    contact_wa_btn:"Message me on WhatsApp",
+    cd_email:"Email", cd_response:"Response", cd_response_val:"Less than 2 hours on business days",
+    form_name:"Your name", form_email:"Your email", form_service:"What do you need?",
+    opt_legal:"Legal / Sworn Translation", opt_tech:"Technical Translation", opt_av:"Audiovisual Translation", opt_mentor:"English Mentoring", opt_advisory:"English Advisory", opt_other:"Not sure / general inquiry",
+    form_msg:"Tell me more", form_submit:"Send message",
+    form_success:"Done! I'll get back to you shortly.",
+    footer_desc:"Legally valid translations and English mentoring. Based in Argentina, serving the world. Certified Public Translators.",
+    footer_services:"Services", footer_legal:"Legal Translation", footer_tech:"Technical Translation", footer_av:"Audiovisual Translation", footer_mentor:"English Mentoring", footer_advisory:"English Advisory",
+    footer_about_col:"About", footer_about_link:"Who we are", footer_faq:"FAQ", footer_contact_link:"Contact",
+    footer_contact:"Contact", footer_worldwide:"Argentina · Worldwide",
+    footer_rights:"All rights reserved", footer_tag:"Certified Public Translators · Argentina",
+    services: [
+      { num:"01", title:"Your contracts translated and legally valid", desc:"Got a contract, power of attorney, corporate bylaws or any legal document that needs to be in English (or Spanish) with official validity? That's sworn translation. I do it, sign it, seal it, and it works before any court, registry or foreign government. No shortcuts here.", tags:["Contracts", "Powers of attorney", "Bylaws", "Apostilles", "Civil certificates", "Court rulings"] },
+      { num:"02", title:"Technical documentation that makes sense", desc:"User manuals, safety data sheets, engineering specs, ISO standards, technical reports. Poorly translated technical documentation causes accidents, fines and lawsuits. I translate it with terminological rigor and industrial consistency so that whoever uses it, actually understands it.", tags:["Manuals", "SDS sheets", "ISO standards", "Engineering", "Pharma"] },
+      { num:"03", title:"Subtitles and scripts for your content", desc:"You have a series, a documentary, an online course, a corporate video and you need subtitles or a script in the other language. I do it respecting the rhythm, natural speech and cultural context. In SRT, VTT or whatever format you need.", tags:["Subtitles SRT/VTT", "Dubbing", "Streaming", "E-learning", "Corporate"] },
+      { num:"04", title:"English that works, not that you study", desc:"Individual 1:1 mentoring sessions for professionals who need to improve their English in specific contexts: interviews, meetings, negotiations, presentations. Not an English class. Work focused on real results, with someone who knows what the business world is actually like.", tags:["1:1 online", "Business", "Interviews", "Presentations", "Pronunciation"] },
+      { num:"05", title:"Someone to review your English emails", desc:"You write in English but you're not 100% sure it sounds right. English Advisory is exactly that: I review your emails, proposals, reports or any communication before you send it. I also provide real-time support for important meetings or negotiations.", tags:["Email review", "Proposals", "Reports", "Meetings", "Negotiations"] }
+    ],
+    clients: [
+      { icon:"👔", title:"Professionals and executives", body:"Lawyers, accountants, engineers, managers who need to present documents abroad or communicate in English in high-stakes contexts. People who can't afford mistakes." },
+      { icon:"✈", title:"People moving abroad", body:"Emigrants, students applying to foreign universities, people applying for residency or citizenship in another country. They need their civil status documents apostilled and translated." },
+      { icon:"🏢", title:"Companies working internationally", body:"Exporting SMEs, startups with foreign investors, companies with international suppliers. They need contracts, manuals, compliance and English communications that work legally." },
+      { icon:"🎬", title:"Content creators and production houses", body:"YouTubers, audiovisual production companies, e-learning platforms. They need subtitles, scripts and localization to reach audiences in the other language." }
+    ],
+    process: [
+      { num:"01", title:"Tell me", body:"Message me on WhatsApp or use the form. Tell me what you need: document type, languages, what it's for, when you need it. No technical jargon required." },
+      { num:"02", title:"Quote", body:"Within 2 business hours I'll send you the final price and delivery date. No surprises, no fine print. If it works for you, we confirm and get started." },
+      { num:"03", title:"Done", body:"You receive your certified translation as a PDF by email within the agreed time. With signature, with seal, ready to submit wherever you need. If something's not right, we sort it out." }
+    ],
+    mentorFeatures: [
+      { icon:"🎯", title:"Free 30-minute diagnostic session", body:"We start with a no-charge session where I listen to you and understand exactly what you need to improve." },
+      { icon:"📋", title:"Tailored plan", body:"No generic courses. We design the program together based on your goals and your schedule." },
+      { icon:"🎤", title:"1:1 sessions of 60 minutes", body:"Via video call, weekly or bi-weekly at your pace. With a bilingual professional who knows the real world." },
+      { icon:"🚀", title:"Results in weeks, not years", body:"We don't promise \"perfect English\". We promise that in the coming weeks you'll notice a real difference in the situations that matter." }
+    ],
+    testimonials: [
+      { text:"I needed to translate my company's bylaws to present to foreign investors. I had it in 24 hours, perfectly certified. Saved me weeks of trouble.", author:"Martín G.", role:"CEO, tech startup" },
+      { text:"I was applying for residency in Spain and needed several birth certificates translated and apostilled. They guided me through the whole process. Crystal clear.", author:"Valeria R.", role:"Professional, moving to Spain" },
+      { text:"The mentoring sessions completely changed how I perform in international meetings. I don't freeze anymore. I know how to handle the language under pressure.", author:"Federico L.", role:"Operations Manager" },
+      { text:"I needed English subtitles for a film festival. They delivered before the deadline, 100% accurate. Brilliant.", author:"Luciana M.", role:"Audiovisual director" }
+    ],
+    faqs: [
+      { q:"Why do I need a sworn translation and not just a regular one?", a:"Because official bodies (courts, embassies, notary offices, foreign universities) only accept translations signed and sealed by a Certified Public Translator. A translation without that certification simply has no legal validity, no matter how well-written it is." },
+      { q:"How much does a translation cost?", a:"It depends on the document type, volume and urgency. Sworn translations are calculated per page (250 standard words). Send me the document on WhatsApp and within 2 hours I'll give you the exact price, no obligation." },
+      { q:"How long does it take?", a:"The standard turnaround is 24 to 48 hours for documents of up to 5 pages. If you need it urgent (same day), there's a 50% surcharge and it's subject to availability. I always confirm the timeline before starting." },
+      { q:"Can I send the document via WhatsApp or email?", a:"Yes, that's why we're 100% digital. Send the PDF or a photo of the document and I'll return the certified translation as a PDF. If you need the original with handwritten signature and official seal on paper, we coordinate that." },
+      { q:"Are the translations valid abroad?", a:"Yes. Translations by Certified Public Translators are internationally recognized, especially when accompanied by an apostille under the Hague Convention. If you're not sure whether your document needs an apostille, I'll advise you." },
+      { q:"What are the mentoring sessions like?", a:"They're individual, via video call, 60 minutes each. Before we begin, we do a free 30-minute diagnostic session to understand your goals. The frequency is weekly or bi-weekly as we agree. It's not a course — it's work with you, for you." },
+      { q:"What exactly is the English Advisory service?", a:"It's a review and improvement service for English texts you've already written or are about to send. I review emails, proposals, reports, presentations. I also provide real-time support for important meetings: I help you prepare or I'm available by chat during the meeting." },
+      { q:"What if my document is in bad condition or low resolution?", a:"If the original is deteriorated or poor quality, I'll analyze it and tell you whether translation is possible or whether you need to obtain a better copy from the issuing body. I'm always honest about what can and can't be done." }
+    ]
+  }
+};
+
+let lang = 'es';
+
+function applyLocale() {
+  const t = locale[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  renderServices();
+  renderClients();
+  renderProcess();
+  renderMentorFeatures();
+  renderTestimonials();
+  renderFAQs();
+  document.documentElement.lang = lang;
+  document.getElementById('langToggle').textContent = lang === 'es' ? 'EN' : 'ES';
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  lang = lang === 'es' ? 'en' : 'es';
+  applyLocale();
+});
+
+function renderServices() {
+  const t = locale[lang];
+  document.getElementById('servicesList').innerHTML = t.services.map(s => `
+    <div class="service-item">
+      <div class="service-item-num">${s.num}</div>
+      <div class="service-item-content">
+        <div class="service-item-title">${s.title}</div>
+        <p class="service-item-desc">${s.desc}</p>
+        <div class="service-tags">${s.tags.map(tag=>`<span class="service-tag">${tag}</span>`).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderClients() {
+  const t = locale[lang];
+  document.getElementById('clientsGrid').innerHTML = t.clients.map(c => `
+    <div class="client-card">
+      <span class="client-card-icon">${c.icon}</span>
+      <div class="client-card-title">${c.title}</div>
+      <p class="client-card-body">${c.body}</p>
+    </div>
+  `).join('');
+}
+
+function renderProcess() {
+  const t = locale[lang];
+  document.getElementById('processSteps').innerHTML = t.process.map(p => `
+    <div class="process-step">
+      <span class="process-step-num">${p.num}</span>
+      <div class="process-step-title">${p.title}</div>
+      <p class="process-step-body">${p.body}</p>
+    </div>
+  `).join('');
+}
+
+function renderMentorFeatures() {
+  const t = locale[lang];
+  document.getElementById('mentorFeatures').innerHTML = t.mentorFeatures.map(f => `
+    <li class="mentor-feature">
+      <div class="mentor-feature-icon">${f.icon}</div>
+      <div>
+        <div class="mentor-feature-title">${f.title}</div>
+        <p class="mentor-feature-body">${f.body}</p>
+      </div>
+    </li>
+  `).join('');
+}
+
+function renderTestimonials() {
+  const t = locale[lang];
+  document.getElementById('testimonialsGrid').innerHTML = t.testimonials.map(testi => `
+    <div class="testimonial-bubble">
+      <p class="testimonial-text">${testi.text}</p>
+      <div class="testimonial-author">${testi.author}</div>
+      <div class="testimonial-role">${testi.role}</div>
+    </div>
+  `).join('');
+}
+
+function renderFAQs() {
+  const t = locale[lang];
+  document.getElementById('faqList').innerHTML = t.faqs.map((faq, i) => `
+    <div class="faq-item" id="faq-${i}">
+      <button class="faq-btn" onclick="toggleFAQ(${i})">
+        <span class="faq-q">${faq.q}</span>
+        <div class="faq-icon">▾</div>
+      </button>
+      <div class="faq-answer"><p class="faq-a">${faq.a}</p></div>
+    </div>
+  `).join('');
+}
+
+function toggleFAQ(i) {
+  document.getElementById('faq-' + i).classList.toggle('open');
+}
+
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  document.getElementById('successMsg').style.display = 'block';
+  e.target.reset();
+});
+
+applyLocale();
+</script>
+</body>
+</html>
